@@ -1,10 +1,16 @@
-import React from "react";
+import React, { Children } from "react";
 import ReactDOM from "react-dom";
 import { RecoilRoot } from "recoil";
 import { ThemeProvider } from "styled-components";
 import App from "./App";
 import { createGlobalStyle } from "styled-components";
 import { theme } from "./theme";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Header from "./Components/Header";
+import Home from "./Routes/Home";
+import Tv from "./Routes/Tv";
+import Search from "./Routes/Search";
+import { createRoot } from 'react-dom/client';
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -71,14 +77,37 @@ a {
 }
 `;
 
-ReactDOM.render(
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App/>,
+    children: [
+      { index: true,
+        path: "/",
+        element: <Home/>
+      },
+      {
+        path: "/tv",
+        element: <Tv/>
+      },
+      {
+        path: "/search",
+        element: <Search/>
+      },
+  ]
+  }
+])
+
+const container = document.getElementById("root");
+const root = createRoot(container!);
+
+root.render(
   <React.StrictMode>
     <RecoilRoot>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <App />
+        <RouterProvider router={router} />
       </ThemeProvider>
     </RecoilRoot>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
