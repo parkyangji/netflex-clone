@@ -21,7 +21,7 @@ const router = createBrowserRouter([
     children: [
       { index: true,
         path: "/",
-        element: <Home/>
+        element: <Home/>,
       },
       {
         path: "/tv",
@@ -30,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/search",
         element: <Search/>
+      },
+      {
+        path: "/movies/:movieid",
+        element: <Home/>
       },
   ]
   }
@@ -41,7 +45,6 @@ const root = createRoot(container!);
 const client = new QueryClient();
 
 root.render(
-  <React.StrictMode>
     <RecoilRoot>
       <HelmetProvider>
         <QueryClientProvider client={client}>
@@ -51,5 +54,4 @@ root.render(
         </QueryClientProvider>
       </HelmetProvider>
     </RecoilRoot>
-  </React.StrictMode>
 );
