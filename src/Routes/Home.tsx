@@ -8,13 +8,13 @@ import { useMatch, useNavigate } from "react-router-dom";
 
 const rowVariants = {
   hidden: {
-    x: window.outerWidth,
+    x: window.innerWidth, //window.outerWidth
   },
   visible: {
     x: 0,
   },
   exit: {
-    x: -window.outerWidth,
+    x: -window.innerWidth,
   },
 };
 
@@ -23,25 +23,20 @@ const offset = 6; // 한번에 보여주고 싶은 영화 수
 function Home() {
   const history = useNavigate(); // url을 왔다갔다
   const bigMovieMatch = useMatch("/movies/:movieid");
+  const movieId = bigMovieMatch?.params.movieid;
 
   const nowPlayings = useQuery<IGetMoviesResult>({
     queryFn: () => getMovies(),
     queryKey: ["movies", "nowPlaying"],
   });
 
+
   /*
   const clicedMovie =
     bigMovieMatch?.params.movieid &&
     data?.results.find((movie) => movie.id === +bigMovieMatch.params.movieid!); // ! 항상 존재한다
   */
-  // const details = useQuery({
-  //   queryFn: () => detailMovie(Number(bigMovieMatch?.params.movieid)),
-  //   queryKey: ["details"],
-  // });
 
-  // useEffect(() => {
-  //  // console.log(details.data);
-  // }, [bigMovieMatch]);
   
   const [index, setIndex] = useState(0);
   const incraseIndex = () => {
@@ -57,10 +52,25 @@ function Home() {
   const toggleLeving = () => setLeaving((prev) => !prev);
   const [leaving, setLeaving] = useState(false);
 
+
+  const details = useQuery({
+    queryKey: ["details", movieId],
+    queryFn: () => movieId ? detailMovie(Number(movieId)) : null,
+  });
+
   const onBoxClicked = (movieid: number) => {
     history(`/movies/${movieid}`);
   };
-  const onBackClick = () => history(-1);
+  const onBackClick = () => {
+    history(-1);
+  }
+
+  useEffect(() => {
+    if (movieId) {
+      details.refetch();
+    }
+  }, [movieId, details.refetch]);
+  console.log(details.data)
 
   return (
     <Wrapper>
@@ -77,7 +87,7 @@ function Home() {
           </Banner>
           {/* 영화슬라이더 */}
           <Slider>
-            <SliderTitle>Now Playing</SliderTitle>
+            <SliderTitle>현재 상영작</SliderTitle>
             <AnimatePresence initial={false} onExitComplete={toggleLeving}>
               <Row
                 variants={rowVariants}
@@ -106,20 +116,18 @@ function Home() {
           </Slider>
 
           {/* 팝업 */}
-          {/* {bigMovieMatch ? (
+          {bigMovieMatch ? (
             <>
               <Back
                 onClick={onBackClick}
               />
-                {clicedMovie && (
-                    <BigMoive>
-                      <BigPoster src={makeImagePath(clicedMovie.poster_path, "w200")} alt="" />
-                      <BigTitle>{clicedMovie.title}</BigTitle>
-                      <BigOverview>{clicedMovie.overview}</BigOverview>
-                    </BigMoive>
-                )}
+                {details.data ? <BigMoive>
+                  <BigPoster src={makeImagePath(details.data.poster_path, "w200")} alt="" />
+                  <BigTitle>{details.data.title}</BigTitle>
+                  <BigOverview>{details.data.overview}</BigOverview>
+                </BigMoive> : null}
             </>
-          ) : null} */}
+          ) : null}
          
         </>
       )}
