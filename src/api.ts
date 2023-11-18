@@ -7,6 +7,7 @@ interface IMovie {
   poster_path: string;
   title: string;
   overview: string;
+  genre_ids : [];
 }
   
 export interface IGetMoviesResult {
@@ -21,13 +22,6 @@ export interface IGetMoviesResult {
 }
 
 // fetch는 데이터를 받아오고 json을 리턴하는 함수
-/*
-export function getMovies() {
-  return fetch(`${BASE_PATH}/movie/now_playing?api_key=${API_KEY}`).then(
-    (response) => response.json()
-  );
-}
-*/
 const options = {
   method: 'GET',
   headers: {
@@ -38,6 +32,10 @@ const options = {
 
 export function getMovies(){
   return fetch(`${BASE_PATH}/movie/now_playing?language=ko-KR&page=1`, options).then(
-    response => response.json()
-    )
+    response => response.json())
+}
+
+export function detailMovie(id :number){ 
+  return fetch(`${BASE_PATH}/movie/${id}?language=ko-KR'`, options)
+  .then(response => response.json())
 }
