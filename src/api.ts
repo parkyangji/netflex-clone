@@ -1,4 +1,3 @@
-const API_KEY = "22602a6b48ee1370cf81bb1232481090";
 const BASE_PATH = "https://api.themoviedb.org/3";
 
 interface IMovie {
@@ -30,8 +29,13 @@ const options = {
   }
 };
 
-export function getMovies(){
-  return fetch(`${BASE_PATH}/movie/now_playing?language=ko-KR&page=1`, options).then(
+export interface IGet {
+  type : string;
+  get : string;
+}
+
+export function getMovies({type, get}: IGet){
+  return fetch(`${BASE_PATH}/${type}/${get}?language=ko-KR&page=1`, options).then(
     response => response.json())
 }
 
