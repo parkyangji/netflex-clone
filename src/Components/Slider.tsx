@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { IGet, IGetMoviesResult, detailMovie, getMovies } from "../api";
+import {IGet, IGetMoviesResult, detailMovie, getMovies } from "../api";
 import styled from "styled-components";
 import { makeImagePath } from "../utils";
 import { AnimatePresence, motion } from "framer-motion";
@@ -23,13 +23,11 @@ const offset = 6; // 한번에 보여주고 싶은 영화 수
 
 function Slider( {type, get} : IGet){
   const history = useNavigate(); // url을 왔다갔다
-  const bigMovieMatch = useMatch("/movies/:movieid");
-
+  
   const { data } = useQuery<IGetMoviesResult>({
     queryFn: () => getMovies({type, get}),
     queryKey: [type, get],
   });
-
   
   const [index, setIndex] = useState(0);
   const incraseIndex = () => {
@@ -45,23 +43,13 @@ function Slider( {type, get} : IGet){
   const toggleLeving = () => setLeaving((prev) => !prev);
   const [leaving, setLeaving] = useState(false);
 
-
+  
   const onBoxClicked = (movieid: number) => {
     history(`/movies/${movieid}`);
   };
-  const onBackClick = () => {
-    history(-1);
-  }
-
-
-  let title;
-  if (get === "now_playing") {
-    title = "현재상영작"
-  }
-
   return (
-    <SliderWrap onClick={incraseIndex}>
-        <SliderTitle>{title}</SliderTitle>
+    <SliderWrap >
+        <SliderTitle>{get}</SliderTitle>
         <AnimatePresence initial={false} onExitComplete={toggleLeving}>
           <Row
             variants={rowVariants}
@@ -87,25 +75,33 @@ function Slider( {type, get} : IGet){
               ))}
           </Row>
         </AnimatePresence>
+        <Button onClick={incraseIndex}></Button>
     </SliderWrap>
   )
 }
 
 export default Slider;
 
-const Loader = styled.div`
-  height: 20vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+
+const Button = styled.button`
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 5;
+  width: 3vw;
+  height: 100%;
+  background: transparent;
+  border: none;
+`
 
 
 const SliderWrap = styled.div`
+  height: 20vw;
+  max-height: 280px;
   position: relative;
   top:-100px;
-  margin: 1rem;
-  margin-left: 3rem;
+  margin: 1vw;
+  margin-left: 3vw;
 `;
 
 const SliderTitle = styled.h2`
@@ -125,7 +121,8 @@ const Box = styled(motion.div)<{ $bgphoto: string }>`
   background-image: url(${(props) => props.$bgphoto});
   background-size: cover;
   background-position: center;
-  height: 200px;
+  height: 15vw;
+  max-height: 200px;
   font-size: 1em;
   &:last-child {
     transform-origin: center right;

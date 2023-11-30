@@ -3,14 +3,22 @@ import { IGetMoviesResult, getMovies } from "../api";
 import styled from "styled-components";
 import { makeImagePath } from "../utils";
 import Slider from "../Components/Slider";
+import { useMatch, useNavigate } from "react-router-dom";
+import Detail from "../Components/Detail";
 
 
 function Home() {
+  const bigMovieMatch = useMatch("/movies/:movieid");
 
   const nowPlayings = useQuery<IGetMoviesResult>({
     queryFn: () => getMovies( {type: "movie", get: "now_playing"} ),
     queryKey: ["movies", "nowPlaying"],
   });
+
+  const history = useNavigate();
+  const onBackClick = () => {
+    history(-1);
+  };
 
   return (
     <Wrapper>
@@ -23,20 +31,17 @@ function Home() {
 
         {/* 영화슬라이더 */}
         <Slider type="movie" get="now_playing" />
+        <Slider type="movie" get="popular" />
+        <Slider type="movie" get="top_rated" />
+        <Slider type="movie" get="upcoming" />
 
         {/* 팝업 */}
-        {/* {bigMovieMatch ? (
+        {bigMovieMatch ? (
           <>
-            <Back
-              onClick={onBackClick}
-            />
-              {details.data ? <BigMoive>
-                <BigPoster src={makeImagePath(details.data.poster_path, "w200")} alt="" />
-                <BigTitle>{details.data.title}</BigTitle>
-                <BigOverview>{details.data.overview}</BigOverview>
-              </BigMoive> : null}
+            <Back onClick={onBackClick} />
+            <Detail id={bigMovieMatch?.params.movieid} />
           </>
-        ) : null} */}
+        ) : null}
     </Wrapper>
   );
 }
@@ -68,6 +73,15 @@ const Overview = styled.p`
   width: 50%;
 `;
 
+const Back = styled.div`
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
+
 
 // const BigMoive = styled(motion.div)`
 //   position: fixed;
@@ -81,14 +95,6 @@ const Overview = styled.p`
 //   border-radius: 15px;
 //   overflow: hidden;
 //   background: linear-gradient(180deg, rgba(89,7,5,1) 40%, rgba(140,45,45,1) 100%);
-// `;
-
-// const Back = styled(motion.div)`
-//   position: fixed;
-//   top: 0;
-//   width: 100%;
-//   height: 100%;
-//   background-color: rgba(0, 0, 0, 0.5);
 // `;
 
 // const BigPoster = styled.img`
