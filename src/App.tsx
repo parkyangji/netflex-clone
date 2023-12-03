@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Header from "./Components/Header";
+import Footer from "./Components/Footer"
 import Home from "./Routes/Home";
 import { createGlobalStyle } from "styled-components";
 import { Helmet } from "react-helmet-async";
@@ -78,6 +79,7 @@ function App(){
       <GlobalStyle/>
       <Header/>
       <Outlet/>
+      <Footer/>
     </>
   )
 }

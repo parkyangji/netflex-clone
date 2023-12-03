@@ -72,10 +72,13 @@ function Header() {
     // useNavigate로 prop 전달
     history(`/search?keyword=${data.keyword}`, {state: {key : data.keyword}});
   }
+
+  const homeClick = () => history('/');
   return (
     <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
       <Col>
         <Logo
+          onClick={homeClick}
           variants={logoVariants}
           whileHover="active"
           initial="normal"
@@ -145,6 +148,7 @@ const Col = styled.div`
 `;
 
 const Logo = styled(motion.svg)`
+  cursor: pointer;
   margin-right: 50px;
   width: 95px;
   height: 25px;
