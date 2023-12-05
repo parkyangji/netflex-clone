@@ -1,38 +1,61 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { IGetDetailsResult, detailMovie } from "../api";
+import { IGetDetailsResult, castMovie, detailMovie } from "../api";
 import { makeImagePath } from "../utils";
 
 interface IId {
   id : string | undefined;
 }
 
+interface ICast {
+  cast : []
+}
+
 function Detail( {id} : IId ) {
-  const { data } = useQuery<IGetDetailsResult>({
+  const detail = useQuery<IGetDetailsResult>({
     queryFn: () => detailMovie(Number(id)),
     queryKey: ['detail', id],
   });
+  const cast = useQuery({
+    queryFn: () => castMovie(Number(id)),
+    queryKey: ['cast', id],
+    select(data : ICast) {
+      return data.cast
+    },
+  });
+  //console.log(detail.data, cast.data)
 
-  return (<>
-      {data ? (
-        <BigMoive>
-          <BigPoster
-            src={makeImagePath(data.poster_path, "w200")}
-            alt=""
-          />
-          <BigTitle>{data.title}</BigTitle>
-          <BigOverview>{data.overview}</BigOverview>
-        </BigMoive>
-      ) : null}
-    </>
+  if (detail.isLoading && cast.isLoading) {
+    console.log(detail.isLoading && cast.isLoading)
+    return null
+  }
+
+  if (detail.isError && cast.isError) {
+    console.log(detail.error.message, cast.error.message)
+    return null
+  }
+
+  return (
+    <BigMovie>
+    {detail && detail.data && ( // Check if detail and detail.data exist
+      <>
+        <BigPoster
+          src={makeImagePath(detail.data.poster_path, "w200")}
+          alt=""
+        />
+        <BigTitle>{detail.data.title}</BigTitle>
+        <BigOverview>{detail.data.overview}</BigOverview>
+      </>
+    )}
+  </BigMovie>
   );
 }
 
 export default Detail;
 
 
-const BigMoive = styled.div`
+const BigMovie = styled.div`
   position: fixed;
   width: 50vw;
   height: 50vh;

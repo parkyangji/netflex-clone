@@ -71,3 +71,8 @@ export function detailMovie(id :number){
   return fetch(`${BASE_PATH}/movie/${id}?language=ko-KR'`, options)
   .then(response => response.json())
 }
+
+export function castMovie(id :number){
+  return fetch(`${BASE_PATH}/movie/${id}/credits?language=ko-KR`, options)
+  .then(response => response.json())
+}

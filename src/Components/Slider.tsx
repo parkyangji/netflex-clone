@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import {IGet, IGetMoviesResult, detailMovie, getMovies } from "../api";
 import styled from "styled-components";
-import { makeImagePath } from "../utils";
+import { makeImagePath, movieSliderTitle } from "../utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useMatch, useNavigate } from "react-router-dom";
@@ -22,14 +22,16 @@ const offset = 6; // 한번에 보여주고 싶은 영화 수
 
 
 function Slider( {type, get} : IGet){
-  const history = useNavigate(); // url을 왔다갔다
-  
+
   const { data } = useQuery<IGetMoviesResult>({
     queryFn: () => getMovies({type, get}),
     queryKey: [type, get],
   });
   
+
   const [index, setIndex] = useState(0);
+  const toggleLeving = () => setLeaving((prev) => !prev);
+  const [leaving, setLeaving] = useState(false);
   const incraseIndex = () => {
     if (data) {
       if (leaving) return;
@@ -40,16 +42,25 @@ function Slider( {type, get} : IGet){
       setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
     }
   };
-  const toggleLeving = () => setLeaving((prev) => !prev);
-  const [leaving, setLeaving] = useState(false);
+  const decreaseIndex = () => {
+    if (data) {
+      if (leaving) return;
+      toggleLeving();
 
-  
+      const totalMovies = data.results.length - 1; // 배너영화 -1
+      const maxIndex = Math.ceil(totalMovies / offset) - 1; // 0으로 시작하기때문에 -1 해줘야함 (나눗셈하면 1)
+      setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
+    }
+  };
+  //console.log(index)
+
+  const history = useNavigate(); // url을 왔다갔다
   const onBoxClicked = (movieid: number) => {
     history(`/movies/${movieid}`);
   };
   return (
     <SliderWrap >
-        <SliderTitle>{get}</SliderTitle>
+        <SliderTitle>{movieSliderTitle(get)}</SliderTitle>
         <AnimatePresence initial={false} onExitComplete={toggleLeving}>
           <Row
             variants={rowVariants}
@@ -75,15 +86,26 @@ function Slider( {type, get} : IGet){
               ))}
           </Row>
         </AnimatePresence>
-        <Button onClick={incraseIndex}></Button>
+        <RightButton onClick={incraseIndex}></RightButton>
+        <LeftButton onClick={decreaseIndex}></LeftButton>
     </SliderWrap>
   )
 }
 
 export default Slider;
 
+const LeftButton = styled.button`
+  position: absolute;
+  left: -3vw;
+  top: 0;
+  z-index: 5;
+  width: 3vw;
+  height: 100%;
+  background: transparent;
+  border: none;
+`
 
-const Button = styled.button`
+const RightButton = styled.button`
   position: absolute;
   right: 0;
   top: 0;
