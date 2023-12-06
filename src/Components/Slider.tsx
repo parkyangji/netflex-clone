@@ -7,15 +7,15 @@ import { useEffect, useState } from "react";
 import { useMatch, useNavigate } from "react-router-dom";
 
 const rowVariants = {
-  hidden: {
-    x: window.innerWidth, //window.outerWidth
-  },
+  hidden: (left : boolean) => ({
+    x: left ? -window.innerWidth : window.innerWidth, //window.outerWidth
+  }),
   visible: {
     x: 0,
   },
-  exit: {
-    x: -window.innerWidth,
-  },
+  exit: (left : boolean) => ({
+    x: left ? window.innerWidth : -window.innerWidth,
+  }),
 };
 
 const offset = 6; // 한번에 보여주고 싶은 영화 수
@@ -30,12 +30,14 @@ function Slider( {type, get} : IGet){
   
 
   const [index, setIndex] = useState(0);
+  const [derectionLeft, setDerection] = useState(false);
   const toggleLeving = () => setLeaving((prev) => !prev);
   const [leaving, setLeaving] = useState(false);
   const incraseIndex = () => {
     if (data) {
       if (leaving) return;
       toggleLeving();
+      setDerection(false);
 
       const totalMovies = data.results.length - 1; // 배너영화 -1
       const maxIndex = Math.ceil(totalMovies / offset) - 1; // 0으로 시작하기때문에 -1 해줘야함 (나눗셈하면 1)
@@ -46,6 +48,7 @@ function Slider( {type, get} : IGet){
     if (data) {
       if (leaving) return;
       toggleLeving();
+      setDerection(true);
 
       const totalMovies = data.results.length - 1; // 배너영화 -1
       const maxIndex = Math.ceil(totalMovies / offset) - 1; // 0으로 시작하기때문에 -1 해줘야함 (나눗셈하면 1)
@@ -61,8 +64,9 @@ function Slider( {type, get} : IGet){
   return (
     <SliderWrap >
         <SliderTitle>{movieSliderTitle(get)}</SliderTitle>
-        <AnimatePresence initial={false} onExitComplete={toggleLeving}>
+        <AnimatePresence custom={derectionLeft} initial={false} onExitComplete={toggleLeving}>
           <Row
+            custom={derectionLeft}
             variants={rowVariants}
             initial="hidden"
             animate="visible"
@@ -121,7 +125,7 @@ const SliderWrap = styled.div`
   height: 20vw;
   max-height: 280px;
   position: relative;
-  top:-100px;
+  top: -6rem;
   margin: 1vw;
   margin-left: 3vw;
 `;
