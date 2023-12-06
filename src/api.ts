@@ -1,6 +1,6 @@
 const BASE_PATH = "https://api.themoviedb.org/3";
 
-interface IMovie {
+export interface IMovie {
   id: number;
   backdrop_path: string;
   poster_path: string;
@@ -24,28 +24,28 @@ export interface IGetDetailsResult {
   adult : boolean
   backdrop_path : string; 
   belongs_to_collection : {};
-  budget : Number;
-  genres : [];
+  budget : number;
+  genres : [{id : number, name: string}];
   homepage : string;
-  id : Number;
+  id : number;
   imdb_id : string;
   original_language : string;
   original_title : string;
   overview : string;
-  popularity : Number;
+  popularity : number;
   poster_path : string;
   production_companies : [];
   production_countries : [];
   release_date : string;
-  revenue : Number;
-  runtime : Number;
+  revenue : number;
+  runtime : number;
   spoken_languages : [];
   status : string;
   tagline : string;
   title : string;
   video : boolean;
-  vote_average : Number;
-  vote_count : Number;
+  vote_average : number;
+  vote_count : number;
 }
 
 // fetch는 데이터를 받아오고 json을 리턴하는 함수

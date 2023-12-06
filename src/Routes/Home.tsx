@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { IGetMoviesResult, getMovies } from "../api";
+import { getMovies, IMovie } from "../api";
 import styled from "styled-components";
 import { makeImagePath } from "../utils";
 import Slider from "../Components/Slider";
@@ -10,9 +10,12 @@ import Detail from "../Components/Detail";
 function Home() {
   const bigMovieMatch = useMatch("/movies/:movieid");
 
-  const nowPlayings = useQuery<IGetMoviesResult>({
+  const nowPlayings = useQuery({
     queryFn: () => getMovies( {type: "movie", get: "now_playing"} ),
     queryKey: ["movies", "nowPlaying"],
+    select(data) : IMovie {
+      return data.results[0]
+    },
   });
 
   const history = useNavigate();
@@ -20,14 +23,19 @@ function Home() {
     history(-1);
   };
 
+  const onBoxClicked = (movieid: number) => {
+    history(`/movies/${movieid}`);
+  };
+
   return (
     <Wrapper>
-        <Banner
-          $bgphoto={makeImagePath(nowPlayings.data?.results[0].backdrop_path || "")}
-        >
-          <Title>{nowPlayings.data?.results[0].title}</Title>
-          <Overview>{nowPlayings.data?.results[0].overview}</Overview>
+        {nowPlayings && nowPlayings.data && (
+          <Banner $bgphoto={makeImagePath(nowPlayings.data.backdrop_path)}>
+          <Title>{nowPlayings.data.title}</Title>
+          <Overview>{nowPlayings.data.overview}</Overview>
+          <MoreBtn onClick={() => onBoxClicked(nowPlayings.data.id)}>more</MoreBtn>
         </Banner>
+        )}
 
         {/* 영화슬라이더 */}
         <Slider type="movie" get="now_playing" />
@@ -73,43 +81,23 @@ const Overview = styled.p`
   width: 50%;
 `;
 
+const MoreBtn = styled.button`
+  cursor: pointer;
+  width: 150px;
+  background: transparent;
+  border: 1px solid ${(props) => props.theme.white.lighter};
+  border-radius: 10px;
+  margin-top: 2em;
+  padding: 10px;
+  font-size: 1em;
+  color: ${(props) => props.theme.white.lighter};
+`
+
 const Back = styled.div`
   position: fixed;
   top: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
 `;
-
-
-
-// const BigMoive = styled(motion.div)`
-//   position: fixed;
-//   width: 50vw;
-//   height: 50vh;
-//   top: 0;
-//   left: 0;
-//   right: 0;
-//   bottom: 0;
-//   margin: auto;
-//   border-radius: 15px;
-//   overflow: hidden;
-//   background: linear-gradient(180deg, rgba(89,7,5,1) 40%, rgba(140,45,45,1) 100%);
-// `;
-
-// const BigPoster = styled.img`
-//   float: left;
-//   margin: 2rem;
-// `
-
-// const BigTitle = styled.span`
-//   display: block;
-//   color: ${(props) => props.theme.white.lighter};
-//   padding: 1em;
-//   font-size: 1.5em;
-// `;
-
-// const BigOverview = styled.p`
-//   padding: 1em;
-//   color: ${(props) => props.theme.white.lighter};
-// `
