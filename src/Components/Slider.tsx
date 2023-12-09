@@ -18,6 +18,32 @@ const rowVariants = {
   }),
 };
 
+const boxVariants = {
+  normal: {
+    scale: 1,
+  },
+  hover: {
+    scale: 1.1,
+    y: -30,
+    transition: {
+      delay: 0.5,
+      duaration: 0.1,
+      type: "tween",
+    },
+  },
+};
+
+const infoVariants = {
+  hover: {
+    opacity: 1,
+    transition: {
+      delay: 0.7,
+      duaration: 0.1,
+      type: "tween",
+    },
+  },
+};
+
 const offset = 6; // 한번에 보여주고 싶은 영화 수
 
 
@@ -82,8 +108,12 @@ function Slider( {type, get} : IGet){
                   onClick={() => onBoxClicked(movie.id)}
                   key={movie.id}
                   $bgphoto={makeImagePath(movie.backdrop_path, "w500")}
+                  variants={boxVariants}
+                  whileHover="hover"
+                  initial="normal"
+                  transition={{type : "tween"}}
                 >
-                  <Info>
+                  <Info variants={infoVariants}>
                     <span>{movie.title}</span>
                   </Info>
                 </Box>
@@ -97,28 +127,6 @@ function Slider( {type, get} : IGet){
 }
 
 export default Slider;
-
-const LeftButton = styled.button`
-  position: absolute;
-  left: -3vw;
-  top: 0;
-  z-index: 5;
-  width: 3vw;
-  height: 100%;
-  background: transparent;
-  border: none;
-`
-
-const RightButton = styled.button`
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 5;
-  width: 3vw;
-  height: 100%;
-  background: transparent;
-  border: none;
-`
 
 
 const SliderWrap = styled.div`
@@ -160,8 +168,9 @@ const Box = styled(motion.div)<{ $bgphoto: string }>`
 `;
 
 const Info = styled(motion.div)`
+  text-align: center;
   padding: 1em;
-  background-color: ${(props) => props.theme.black.lighter};
+  background-color: rgba(0, 0, 0, 0.7);
   opacity: 0;
   position: absolute;
   width: 100%;
@@ -171,3 +180,26 @@ const Info = styled(motion.div)`
     font-size: 1em;
   }
 `;
+
+const LeftButton = styled.button`
+  position: absolute;
+  left: -3vw;
+  top: 0;
+  z-index: 5;
+  width: 3vw;
+  height: 100%;
+  background: transparent;
+  border: none;
+`
+
+const RightButton = styled.button`
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 5;
+  width: 3vw;
+  height: 100%;
+  background: transparent;
+  border: none;
+`
+

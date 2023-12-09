@@ -48,6 +48,21 @@ export interface IGetDetailsResult {
   vote_count : number;
 }
 
+export interface ICast {
+  adult: boolean;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  order: number;
+  original_name: string;
+  popularity : number;
+  profile_path: string;
+}
+
 // fetch는 데이터를 받아오고 json을 리턴하는 함수
 const options = {
   method: 'GET',
