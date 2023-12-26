@@ -10,7 +10,7 @@ import Detail from "../Components/Detail";
 function Home() {
   const bigMovieMatch = useMatch("/movies/:movieid");
 
-  const nowPlayings = useQuery({
+  const main = useQuery({
     queryFn: () => getMovies( {type: "movie", get: "now_playing"} ),
     queryKey: ["movies", "nowPlaying"],
     select(data) : IMovie {
@@ -29,27 +29,27 @@ function Home() {
 
   return (
     <Wrapper>
-        {nowPlayings && nowPlayings.data && (
-          <Banner $bgphoto={makeImagePath(nowPlayings.data.backdrop_path)}>
-          <Title>{nowPlayings.data.title}</Title>
-          <Overview>{nowPlayings.data.overview}</Overview>
-          <MoreBtn onClick={() => onBoxClicked(nowPlayings.data.id)}>more</MoreBtn>
-        </Banner>
-        )}
+      {main && main.data && (
+        <Banner $bgphoto={makeImagePath(main.data.backdrop_path)}>
+        <Title>{main.data.title}</Title>
+        <Overview>{main.data.overview}</Overview>
+        <MoreBtn onClick={() => onBoxClicked(main.data.id)}>more</MoreBtn>
+      </Banner>
+      )}
 
-        {/* 영화슬라이더 */}
-        <Slider type="movie" get="now_playing" />
-        <Slider type="movie" get="popular" />
-        <Slider type="movie" get="top_rated" />
-        <Slider type="movie" get="upcoming" />
+      {/* 영화슬라이더 */}
+      <Slider type="movie" get="now_playing" />
+      <Slider type="movie" get="popular" />
+      <Slider type="movie" get="top_rated" />
+      <Slider type="movie" get="upcoming" />
 
-        {/* 팝업 */}
-        {bigMovieMatch ? (
-          <>
-            <Back onClick={onBackClick} />
-            <Detail id={bigMovieMatch?.params.movieid} />
-          </>
-        ) : null}
+      {/* 팝업 */}
+      {bigMovieMatch ? (
+        <>
+          <Back onClick={onBackClick} />
+          <Detail id={bigMovieMatch?.params.movieid} />
+        </>
+      ) : null}
     </Wrapper>
   );
 }

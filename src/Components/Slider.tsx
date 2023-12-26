@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import {IGet, IGetMoviesResult, detailMovie, getMovies } from "../api";
 import styled from "styled-components";
 import { makeImagePath, movieSliderTitle } from "../utils";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, delay, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useMatch, useNavigate } from "react-router-dom";
 
@@ -30,7 +30,7 @@ const boxVariants = {
       duaration: 0.1,
       type: "tween",
     },
-  },
+  }
 };
 
 const infoVariants = {
@@ -49,11 +49,11 @@ const offset = 6; // 한번에 보여주고 싶은 영화 수
 
 function Slider( {type, get} : IGet){
 
-  const { data } = useQuery<IGetMoviesResult>({
+  const { data, isLoading, isError } = useQuery<IGetMoviesResult>({
     queryFn: () => getMovies({type, get}),
     queryKey: [type, get],
   });
-  
+
 
   const [index, setIndex] = useState(0);
   const [derectionLeft, setDerection] = useState(false);
@@ -87,6 +87,10 @@ function Slider( {type, get} : IGet){
   const onBoxClicked = (movieid: number) => {
     history(`/movies/${movieid}`);
   };
+
+  if (isLoading) return null;
+  if (isError) return null;
+
   return (
     <SliderWrap >
         <SliderTitle>{movieSliderTitle(get)}</SliderTitle>
@@ -100,7 +104,7 @@ function Slider( {type, get} : IGet){
             transition={{ type: "tween", duration: 1 }}
             key={index}
           >
-            {data?.results
+            {data && data.results
               .slice(1)
               .slice(offset * index, offset * index + offset)
               .map((movie) => (
@@ -152,9 +156,21 @@ const Row = styled(motion.div)`
 `;
 
 const Box = styled(motion.div)<{ $bgphoto: string }>`
-  background-image: url(${(props) => props.$bgphoto});
-  background-size: cover;
-  background-position: center;
+  ${(props)=> props.$bgphoto ? 
+    `background-image: url(${props.$bgphoto});
+    background-size: cover;
+    background-position: center;` :
+    `width: 100%;
+    &:after {
+      content: 'No Image';
+      font-size: 1.3em;
+      display: flex;
+      width: 100%;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+    `}
   height: 15vw;
   max-height: 200px;
   font-size: 1em;
@@ -165,6 +181,9 @@ const Box = styled(motion.div)<{ $bgphoto: string }>`
     transform-origin: center left;
   }
   cursor: pointer;
+  &:hover:after {
+    visibility: hidden;
+  }
 `;
 
 const Info = styled(motion.div)`
