@@ -36,10 +36,11 @@ function Detail( {id} : IId ) {
     <BigMovie>
     {detail && detail.data && cast && cast.data && ( // Check if detail and detail.data exist
       <>
-        <BigPoster
+        {detail.data.poster_path ? 
+          <BigPoster
           src={makeImagePath(detail.data.poster_path)}
           alt=""
-        />
+        /> : <EmptyPoster>No Image</EmptyPoster>}
         <TitleBox>
           <BigTitle>{detail.data.title}</BigTitle>
           <SmallTitle>{detail.data.original_title}</SmallTitle>
@@ -57,7 +58,9 @@ function Detail( {id} : IId ) {
         <ActorWrap>
           {cast.data.map((member) => (
             <ActorBox key={member.id} >
-              <ActorImg src={makeImagePath(member.profile_path)} alt="" />
+              {member.profile_path ? 
+               <ActorImg src={makeImagePath(member.profile_path)} alt="" /> 
+               : <EmptyActor>No Image</EmptyActor>}
               <span>{member.name}</span>
               <SmallTitle>{member.character}</SmallTitle>
             </ActorBox>
@@ -92,6 +95,18 @@ const BigMovie = styled.div`
   z-index: 100;
 `;
 
+const EmptyPoster = styled.div`
+  height: 50%;
+  min-height: 300px;
+  float: left;
+  margin-right: 3vw;
+  margin-bottom: 3vw;
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+`
 
 const BigPoster = styled.img`
   height: 50%;
@@ -152,7 +167,8 @@ const ActorWrap = styled.div`
   justify-content: space-evenly;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 1vw;
+  column-gap: 1vw;
+  row-gap: 3vw;
   padding: 2em;
 `
 
@@ -160,9 +176,20 @@ const ActorBox = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
+  gap: 0.2vw;
 `
 
 const ActorImg = styled.img`
   width: 13vw;
   max-width: 200px;
+`
+
+const EmptyActor = styled.div`
+  height: 100%;
+  width: 13vw;
+  max-width: 200px;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
