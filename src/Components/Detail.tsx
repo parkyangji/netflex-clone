@@ -177,11 +177,21 @@ const ActorBox = styled.div`
   flex-direction: column;
   text-align: center;
   gap: 0.2vw;
+
+    @media ${(props) => props.theme.tablet} {
+      min-width: 160px;
+    }
 `
 
 const ActorImg = styled.img`
   width: 13vw;
   max-width: 200px;
+
+    @media ${(props) => props.theme.tablet} {
+      width: 100%;
+      align-self: center;
+      max-width: 160px;
+    }
 `
 
 const EmptyActor = styled.div`
@@ -192,4 +202,8 @@ const EmptyActor = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+    @media ${(props) => props.theme.tablet} {
+      width: 100%;
+    }
 `
