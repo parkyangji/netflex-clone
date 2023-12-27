@@ -2,9 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import {IGet, IGetMoviesResult, detailMovie, getMovies } from "../api";
 import styled from "styled-components";
 import { makeImagePath, movieSliderTitle } from "../utils";
-import { AnimatePresence, delay, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { AnimatePresence, delay, motion, useMotionValue, useMotionValueEvent } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { useMatch, useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
+import { responsiveSize } from "../theme";
 
 const rowVariants = {
   hidden: (left : boolean) => ({
@@ -44,8 +46,6 @@ const infoVariants = {
   },
 };
 
-const offset = 6; // 한번에 보여주고 싶은 영화 수
-
 
 function Slider( {type, get} : IGet){
 
@@ -53,12 +53,24 @@ function Slider( {type, get} : IGet){
     queryFn: () => getMovies({type, get}),
     queryKey: [type, get],
   });
-
-
+  /* ================= */
+  // pc & 태블릿 슬라이드
   const [index, setIndex] = useState(0);
   const [derectionLeft, setDerection] = useState(false);
   const toggleLeving = () => setLeaving((prev) => !prev);
   const [leaving, setLeaving] = useState(false);
+
+  const isPc = useMediaQuery({
+    query: `(min-width : ${responsiveSize.tablet})`
+  })
+  const isTablet = useMediaQuery({
+    query: `(min-width : ${responsiveSize.mobile}) and (max-width : ${responsiveSize.tablet})`
+  })
+  const isMobile = useMediaQuery({
+    query: `(max-width : ${responsiveSize.mobile})`
+  })
+  const offset = (!isTablet) ? 6 : 4; // 한번에 보여주고 싶은 영화 수
+
   const incraseIndex = () => {
     if (data) {
       if (leaving) return;
@@ -83,6 +95,10 @@ function Slider( {type, get} : IGet){
   };
   //console.log(index)
 
+  // 모바일 슬라이드
+  const carousel = useRef<HTMLDivElement>(null);
+
+  /* ================= */
   const history = useNavigate(); // url을 왔다갔다
   const onBoxClicked = (movieid: number) => {
     history(`/movies/${movieid}`);
@@ -92,40 +108,60 @@ function Slider( {type, get} : IGet){
   if (isError) return null;
 
   return (
-    <SliderWrap >
-        <SliderTitle>{movieSliderTitle(get)}</SliderTitle>
-        <AnimatePresence custom={derectionLeft} initial={false} onExitComplete={toggleLeving}>
-          <Row
-            custom={derectionLeft}
-            variants={rowVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            transition={{ type: "tween", duration: 1 }}
-            key={index}
-          >
-            {data && data.results
-              .slice(1)
-              .slice(offset * index, offset * index + offset)
-              .map((movie) => (
-                <Box
-                  onClick={() => onBoxClicked(movie.id)}
-                  key={movie.id}
-                  $bgphoto={makeImagePath(movie.backdrop_path, "w500")}
-                  variants={boxVariants}
-                  whileHover="hover"
-                  initial="normal"
-                  transition={{type : "tween"}}
-                >
-                  <Info variants={infoVariants}>
-                    <span>{movie.title}</span>
-                  </Info>
-                </Box>
-              ))}
-          </Row>
-        </AnimatePresence>
-        <RightButton onClick={incraseIndex}></RightButton>
-        <LeftButton onClick={decreaseIndex}></LeftButton>
+    <SliderWrap ref={carousel}>
+      <SliderTitle>{movieSliderTitle(get)}</SliderTitle>
+      {(isPc || isTablet) &&
+      <AnimatePresence custom={derectionLeft} initial={false} onExitComplete={toggleLeving}>
+        <Row
+          $offset={offset}
+          custom={derectionLeft}
+          variants={rowVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          transition={{ type: "tween", duration: 1 }}
+          key={index}
+        >
+          {data && data.results
+            .slice(1)
+            .slice(offset * index, offset * index + offset)
+            .map((movie) => (
+              <Box
+                onClick={() => onBoxClicked(movie.id)}
+                key={movie.id}
+                $bgphoto={makeImagePath(movie.backdrop_path, "w500")}
+                variants={boxVariants}
+                whileHover="hover"
+                initial="normal"
+                transition={{type : "tween"}}
+              >
+                <Info variants={infoVariants}>
+                  <span>{movie.title}</span>
+                </Info>
+              </Box>
+            ))}
+        </Row>
+      </AnimatePresence>}
+      {isMobile && 
+        <Row
+          $offset={offset}
+          drag="x" 
+          dragConstraints={carousel}
+          whileDrag={{pointerEvents : "none"}}
+        >
+        {data && data.results
+          .map((movie) => (
+            <Box
+              onClick={() => onBoxClicked(movie.id)}
+              key={movie.id}
+              $bgphoto={makeImagePath(movie.backdrop_path, "w500")}
+            >
+            </Box>
+          ))}
+      </Row>
+      }
+      <RightButton onClick={incraseIndex}></RightButton>
+      <LeftButton onClick={decreaseIndex}></LeftButton>
     </SliderWrap>
   )
 }
@@ -133,26 +169,54 @@ function Slider( {type, get} : IGet){
 export default Slider;
 
 
-const SliderWrap = styled.div`
+const SliderWrap = styled(motion.div)`
   height: 20vw;
   max-height: 280px;
   position: relative;
   top: -6rem;
   margin: 1vw;
   margin-left: 3vw;
+
+    @media ${(props) => props.theme.tablet} {
+      height: 24vw;
+      top: initial;
+      margin: 1vw;
+    }
+    @media ${(props) => props.theme.mobile} {
+      min-height: 200px;
+      height: 35vw;
+      margin: 10px;
+      overflow: hidden;
+    }
 `;
 
 const SliderTitle = styled.h2`
   font-size: 2.2em;
   margin-bottom: 1rem;
+
+    @media ${(props) => props.theme.tablet} {
+      font-size: 1.8em;
+    }
+    @media ${(props) => props.theme.mobile} {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
 `
 
-const Row = styled(motion.div)`
+const Row = styled(motion.div)<{ $offset: number }>`
   display: grid;
   gap: 5px;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat( ${(props) => props.$offset} , 1fr);
   position: absolute;
   width: 100%;
+
+    @media ${(props) => props.theme.mobile} {
+      width: auto;
+      left: 0;
+      display: flex;
+      flex-direction: row;
+      grid-template-columns: initial;
+    }
 `;
 
 const Box = styled(motion.div)<{ $bgphoto: string }>`
@@ -171,6 +235,7 @@ const Box = styled(motion.div)<{ $bgphoto: string }>`
       align-items: center;
     }
     `}
+  position: relative;
   height: 15vw;
   max-height: 200px;
   font-size: 1em;
@@ -184,6 +249,15 @@ const Box = styled(motion.div)<{ $bgphoto: string }>`
   &:hover:after {
     visibility: hidden;
   }
+
+    @media ${(props) => props.theme.tablet} {
+      height: 18vw;
+    }
+    @media ${(props) => props.theme.mobile} {
+      min-width: 115px;
+      min-height: 150px;
+      border-radius: 10px;
+    }
 `;
 
 const Info = styled(motion.div)`
@@ -209,6 +283,12 @@ const LeftButton = styled.button`
   height: 100%;
   background: transparent;
   border: none;
+  padding-block: 0;
+  padding-inline: 0;
+
+    @media ${(props) => props.theme.tablet} {
+      left: -1vw;
+    }
 `
 
 const RightButton = styled.button`
@@ -220,5 +300,11 @@ const RightButton = styled.button`
   height: 100%;
   background: transparent;
   border: none;
+  padding-block: 0;
+  padding-inline: 0;
+
+    @media ${(props) => props.theme.tablet} {
+      right: -1vw;
+    }
 `
 
