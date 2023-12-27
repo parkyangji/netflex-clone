@@ -1,7 +1,7 @@
 import { DefaultTheme } from "styled-components";
 
-const responsiveSize = {
-  mobile : "640px",
+export const responsiveSize = {
+  mobile : "768px",
   tablet : "1024px",
 }
 
