@@ -22,4 +22,8 @@ const FooterWrap = styled.footer`
   width: 100%;
   padding: 20px 60px;
   font-size: 12px;
+
+    @media ${(props) => props.theme.tablet} {
+      padding: 60px;
+    }
 `;

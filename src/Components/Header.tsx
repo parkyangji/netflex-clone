@@ -8,7 +8,7 @@ interface IForm {
   keyword : string;
 }
 
-const logoVariants = {
+export const logoVariants = {
   normal: {
     fillOpacity: 1,
   },
@@ -74,6 +74,7 @@ function Header() {
   }
 
   const homeClick = () => history('/');
+
   return (
     <Nav variants={navVariants} animate={navAnimation} initial={"top"}>
       <Col>
@@ -129,7 +130,7 @@ function Header() {
 
 export default Header;
 
-const Nav = styled(motion.nav)`
+export const Nav = styled(motion.nav)`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -140,14 +141,27 @@ const Nav = styled(motion.nav)`
   font-size: 14px;
   padding: 20px 60px;
   color: white;
+
+    @media ${(props) => (props.theme.mobile)} {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      width: 100vw;
+      top: 0;
+      z-index: 10;
+      font-size: 14px;
+      padding: 20px 60px;
+      color: white;
+    }
 `;
 
-const Col = styled.div`
+export const Col = styled.div`
   display: flex;
   align-items: center;
 `;
 
-const Logo = styled(motion.svg)`
+export const Logo = styled(motion.svg)`
   cursor: pointer;
   margin-right: 50px;
   width: 95px;
@@ -157,6 +171,10 @@ const Logo = styled(motion.svg)`
     stroke-width: 6px;
     stroke: white;
   }
+
+    @media ${(props) => (props.theme.mobile)} {
+      margin-right: initial;
+    }
 `;
 
 const Items = styled.ul`
