@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { IGetDetailsResult, castMovie, detailMovie, ICast } from "../api";
 import { makeImagePath } from "../utils";
+import { FaStar, FaRegStar } from "react-icons/fa"
+import StarRating from "./StarRating";
 
 interface IId {
   id : string | undefined;
@@ -51,7 +53,10 @@ function Detail( {id} : IId ) {
           <span>{detail.data.original_language}</span>
         </ExtraBox>
         <GenreBox>{detail.data.genres.map((genre)=>(<Genre key={genre.id}>{genre.name}</Genre>))}</GenreBox>
-        <VoteAverage>{Math.round(detail.data.vote_average * 10)}%</VoteAverage>
+        <RatingBox>
+          <StarRating value={Math.round(detail.data.vote_average * 10)} starSize="1.2em" />
+          <span>&#40;{Math.round(detail.data.vote_average * 10)}%&#41;</span>
+        </RatingBox>
         <BigOverview>{detail.data.overview}</BigOverview>
 
         <Actor>주요 출연진</Actor>
@@ -75,7 +80,7 @@ function Detail( {id} : IId ) {
 export default Detail;
 
 
-const BigMovie = styled.div`
+export const BigMovie = styled.div`
   padding: 3vw;
   position: fixed;
   width: 80vw;
@@ -147,14 +152,14 @@ const Genre = styled.span`
   font-size: 12px;
 `
 
-const BigOverview = styled.p`
-  padding: 1em;
-  color: ${(props) => props.theme.white.lighter};
+const RatingBox = styled.div`
+  display : flex;
+  gap: 5px;
+  margin-top: 0.5em;
 `
-
-const VoteAverage = styled.span`
-  display: block;
-  margin: 1em 0;
+const BigOverview = styled.p`
+  margin: 1em;
+  color: ${(props) => props.theme.white.lighter};
 `
 
 const Actor = styled.span`
