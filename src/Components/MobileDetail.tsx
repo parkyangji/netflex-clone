@@ -4,8 +4,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { makeImagePath } from "../utils";
 import styled from "styled-components";
 import { IoIosClose } from "react-icons/io"
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import StarRating from "./StarRating";
+import { useState } from "react";
 
 interface IId {
   id : string | undefined;
@@ -16,10 +17,10 @@ const ShowVariants = {
     bottom : -window.innerHeight
   },
   visible: {
-    top: 80
+    bottom: -80
   },
   exit: {
-    bottom: window.innerHeight 
+    bottom: -window.innerHeight 
   },
 };
 
@@ -38,7 +39,11 @@ function MobileDetail( {id} : IId ){
   //console.log(detail.data, cast.data)
 
   const history = useNavigate();
+  const [leaving, setLeaving] = useState(true);
   const onBackClick = () => {
+    setLeaving(false)
+  }
+  const onExit = () => {
     history(-1);
   };
 
@@ -52,37 +57,40 @@ function MobileDetail( {id} : IId ){
     return null
   }
   return (
-    <BigMove
-      variants={ShowVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      transition={{ type: "tween", duration: 0.4 }}
-    >
-      {detail && detail.data && cast && cast.data && (
-        <>
-          {detail.data.poster_path ? 
-          <BigPoster $bgphoto={makeImagePath(detail.data.backdrop_path)} /> 
-          : <EmptyPoster>No Image</EmptyPoster>}
-          <TitleBox>
-            <BigTitle>{detail.data.title}</BigTitle>
-            <SmallTitle>{detail.data.original_title}</SmallTitle>
-          </TitleBox>
-          <ExtraBox>
-            <span>{detail.data.release_date}</span>
-            <span>{Math.floor(detail.data.runtime / 60)+"h "+Math.floor(detail.data.runtime % 60)+"m"}</span>
-            <span>{detail.data.original_language}</span>
-          </ExtraBox>
-          <ExtraBox>
-            {detail.data.genres.map((genre)=>(<Genre key={genre.id}>{genre.name}</Genre>))}
-          </ExtraBox>
-          <RatingBox>
-            <StarRating value={Math.round(detail.data.vote_average * 10)} starSize="1.3em"/>
-          </RatingBox>
-        </>
-      )} 
-      <BackButton onClick={onBackClick}><IoIosClose/></BackButton>
-    </BigMove>
+    <AnimatePresence onExitComplete={onExit}>
+      {leaving && <BigMove
+        variants={ShowVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        key="modal"
+        transition={{ type: "tween", duration: 0.4 }}
+      >
+        {detail && detail.data && cast && cast.data && (
+          <>
+            {detail.data.poster_path ? 
+            <BigPoster $bgphoto={makeImagePath(detail.data.backdrop_path)} /> 
+            : <EmptyPoster>No Image</EmptyPoster>}
+            <TitleBox>
+              <BigTitle>{detail.data.title}</BigTitle>
+              <SmallTitle>{detail.data.original_title}</SmallTitle>
+            </TitleBox>
+            <ExtraBox>
+              <span>{detail.data.release_date}</span>
+              <span>{Math.floor(detail.data.runtime / 60)+"h "+Math.floor(detail.data.runtime % 60)+"m"}</span>
+              <span>{detail.data.original_language}</span>
+            </ExtraBox>
+            <ExtraBox>
+              {detail.data.genres.map((genre)=>(<Genre key={genre.id}>{genre.name}</Genre>))}
+            </ExtraBox>
+            <RatingBox>
+              <StarRating value={Math.round(detail.data.vote_average * 10)} starSize="1.3em"/>
+            </RatingBox>
+          </>
+        )} 
+        <BackButton onClick={onBackClick}><IoIosClose style={{filter: "drop-shadow(0px 0px 3px rgb(0 0 0 / 0.3))"}}/></BackButton>
+      </BigMove>}
+    </AnimatePresence>
   )
 }
 
