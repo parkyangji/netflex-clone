@@ -74,6 +74,18 @@ a {
   text-decoration:none;
   color:inherit;
 }
+button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  -webkit-appearance: none;
+}
 
 #root {
   overflow: hidden;
