@@ -143,16 +143,8 @@ export const Nav = styled(motion.nav)`
   color: white;
 
     @media ${(props) => (props.theme.mobile)} {
-      display: flex;
       justify-content: center;
-      align-items: center;
-      position: fixed;
-      width: 100vw;
-      top: 0;
-      z-index: 10;
-      font-size: 14px;
-      padding: 20px 60px;
-      color: white;
+      position: absolute;
     }
 `;
 
