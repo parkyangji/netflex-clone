@@ -3,6 +3,8 @@ import { getMovies, IMovie } from "../api";
 import styled from "styled-components";
 import { makeImagePath } from "../utils";
 import { useMatch, useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
+import { responsiveSize } from "../theme";
 
 function MainVisual(){
 
@@ -19,13 +21,31 @@ function MainVisual(){
     history(`/movies/${movieid}`);
   };
 
+
+  const isPc = useMediaQuery({
+    query: `(min-width : ${responsiveSize.tablet})`
+  })
+  const isTablet = useMediaQuery({
+    query: `(min-width : ${responsiveSize.mobile}) and (max-width : ${responsiveSize.tablet})`
+  })
+  const isMobile = useMediaQuery({
+    query: `(max-width : ${responsiveSize.mobile})`
+  })
+
+  if (isLoading) return null;
+  if (isError) return null;
+  
   return (<>
-    {data && (
+    {(isPc || isTablet) && data && (
       <Banner $bgphoto={makeImagePath(data.backdrop_path)}>
         <Title>{data.title}</Title>
         <Overview>{data.overview}</Overview>
         <MoreBtn onClick={() => onBoxClicked(data.id)}>more</MoreBtn>
       </Banner>
+    )}
+
+    {(isMobile) && data && (
+      <Banner $bgphoto={makeImagePath(data.backdrop_path)} onClick={() => onBoxClicked(data.id)} />
     )}
   </>)
 }
@@ -41,12 +61,14 @@ const Banner = styled.div<{ $bgphoto: string }>`
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
     url(${(props) => props.$bgphoto});
   background-size: cover;
+  //background-position: center;
 
     @media ${(props) => props.theme.tablet} {
       padding-top: 14em;
     }
     @media ${(props) => props.theme.mobile} {
-      padding-top: initial;
+      height: 45vh;
+      padding: initial;
     }
 `;
 
