@@ -113,9 +113,11 @@ const router = createBrowserRouter([
         path: "/movies/:movieid",
         element: <Home/>
       },
-  ]
+    ]
   }
-])
+],
+{ basename: process.env.PUBLIC_URL}
+);
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
