@@ -6,7 +6,7 @@ import { AnimatePresence, delay, motion, useMotionValue, useMotionValueEvent } f
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
-import { responsiveSize } from "../theme";
+import { RxDoubleArrowRight, RxDoubleArrowLeft } from "react-icons/rx"
 
 const rowVariants = {
   hidden: (left : boolean) => ({
@@ -47,6 +47,35 @@ const infoVariants = {
   },
 };
 
+const arrowLeft = {
+  normal: {
+    opacity: 0,
+  },
+  hover : {
+    opacity : 1,
+    x: -20,
+    transition : {
+      duration: 0.8,
+      repeat : Infinity
+    }
+  }
+}
+
+const arrowRight = {
+  normal: {
+    opacity: 0,
+  },
+  hover : {
+    opacity : 1,
+    x: 20,
+    transition : {
+      duration: 0.8,
+      repeat : Infinity
+    }
+  }
+}
+
+
 
 function Slider( {type, get} : IGet){
 
@@ -57,13 +86,13 @@ function Slider( {type, get} : IGet){
   /* ================= */
   // pc & 태블릿
   const isPc = useMediaQuery({
-    query: `(min-width : ${responsiveSize.tablet})`
+    query: `(min-width : 1024px)`
   })
   const isTablet = useMediaQuery({
-    query: `(min-width : ${responsiveSize.mobile}) and (max-width : ${responsiveSize.tablet})`
+    query: `(min-width : 768px) and (max-width : 1023px)`
   })
   const isMobile = useMediaQuery({
-    query: `(max-width : ${responsiveSize.mobile})`
+    query: `(max-width : 767px)`
   })
   const offset = (!isTablet) ? 6 : 4; // 한번에 보여주고 싶은 영화 수
 
@@ -145,8 +174,8 @@ function Slider( {type, get} : IGet){
               ))}
           </Row>
         </AnimatePresence>
-        <RightButton onClick={incraseIndex}></RightButton>
-        <LeftButton onClick={decreaseIndex}></LeftButton>
+        <RightButton variants={arrowRight} whileHover="hover" initial="normal" transition={{type : "tween"}} onClick={incraseIndex}><RxDoubleArrowRight/></RightButton>
+        <LeftButton variants={arrowLeft}  whileHover="hover" initial="normal" transition={{type : "tween"}} onClick={decreaseIndex}><RxDoubleArrowLeft/></LeftButton>
       </>
       }
 
@@ -284,24 +313,39 @@ const Info = styled(motion.div)`
   }
 `;
 
-const LeftButton = styled.button`
+const LeftButton = styled(motion.button)`
+  cursor: pointer;
   position: absolute;
   left: -3vw;
   top: 0;
   z-index: 5;
-  width: 3vw;
+  width: 6vw;
   height: 100%;
   background: transparent;
   border: none;
   padding-block: 0;
   padding-inline: 0;
+  opacity: 0;
+
+  svg{
+    position: absolute;
+    font-size: 2.5em;
+    left: 0.5em;
+    color: white;
+  }
 
     @media ${(props) => props.theme.tablet} {
-      left: -1vw;
+      width: 3vw;
+      left: 0;
+
+      svg {
+        display: none;
+      }
     }
 `
 
-const RightButton = styled.button`
+const RightButton = styled(motion.button)`
+  cursor: pointer;
   position: absolute;
   right: 0;
   top: 0;
@@ -312,9 +356,20 @@ const RightButton = styled.button`
   border: none;
   padding-block: 0;
   padding-inline: 0;
+  opacity: 0;
 
+  svg{
+    position: absolute;
+    font-size: 2.5em;
+    right: 0.5em;
+    color: white;
+  }
     @media ${(props) => props.theme.tablet} {
-      right: -1vw;
+      right: 0;
+
+      svg {
+        display: none;
+      }
     }
 `
 
