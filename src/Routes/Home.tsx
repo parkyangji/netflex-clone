@@ -4,7 +4,6 @@ import { useMatch, useNavigate } from "react-router-dom";
 import Detail from "../Components/Detail";
 import MainVisual from "../Components/MainVisual";
 import { useMediaQuery } from "react-responsive";
-import { responsiveSize } from "../theme";
 import MobileDetail from "../Components/MobileDetail";
 
 
@@ -16,16 +15,16 @@ function Home() {
   };
 
   const isPc = useMediaQuery({
-    query: `(min-width : ${responsiveSize.tablet})`
+    query: `(min-width : 1024px)`
   })
   const isTablet = useMediaQuery({
-    query: `(min-width : ${responsiveSize.mobile}) and (max-width : ${responsiveSize.tablet})`
+    query: `(min-width : 768px) and (max-width : 1023px)`
   })
   const isMobile = useMediaQuery({
-    query: `(max-width : ${responsiveSize.mobile})`
+    query: `(max-width : 767px)`
   })
-
   return (
+    <>
     <Wrapper>
       {/* 메인 비주얼 */}
       <MainVisual/>
@@ -35,7 +34,7 @@ function Home() {
       <Slider type="movie" get="popular" />
       <Slider type="movie" get="top_rated" />
       <Slider type="movie" get="upcoming" />
-
+    </Wrapper>
       {/* 팝업 */}
       {(isPc || isTablet) && bigMovieMatch ? (
         <>
@@ -49,7 +48,7 @@ function Home() {
           <MobileDetail id={bigMovieMatch?.params.movieid} />
         </>
       ) : null}
-    </Wrapper>
+    </>
   );
 }
 export default Home;

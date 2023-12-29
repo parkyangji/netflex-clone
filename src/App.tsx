@@ -5,12 +5,11 @@ import { createGlobalStyle } from "styled-components";
 import { Helmet } from "react-helmet-async";
 import { useMediaQuery } from "react-responsive";
 import MobileHeader from "./Components/MobileHeader";
-import { responsiveSize } from "./theme";
 
 
 function App(){
   const isMobile = useMediaQuery({
-    query: `(max-width : ${responsiveSize.mobile})`
+    query: `(max-width : 767px)`
   })
 
   if (isMobile) {
