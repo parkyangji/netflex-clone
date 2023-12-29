@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/parkyangji/netflex-clone/static/js/main.ec0fd86f.js",
+    "main.js": "/parkyangji/netflex-clone/static/js/main.3eff91c8.js",
     "index.html": "/parkyangji/netflex-clone/index.html",
-    "main.ec0fd86f.js.map": "/parkyangji/netflex-clone/static/js/main.ec0fd86f.js.map"
+    "main.3eff91c8.js.map": "/parkyangji/netflex-clone/static/js/main.3eff91c8.js.map"
   },
   "entrypoints": [
-    "static/js/main.ec0fd86f.js"
+    "static/js/main.3eff91c8.js"
   ]
 }
