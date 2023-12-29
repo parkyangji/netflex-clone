@@ -94,9 +94,9 @@ function Header() {
           <Item>
             <Link to="/">Home {homeMatch && <Circle layoutId="circle"/>} </Link>
           </Item>
-          <Item>
+          {/* <Item>
             <Link to="tv">Tv Shows {tvMatch && <Circle layoutId="circle"/>}</Link>
-          </Item>
+          </Item> */}
         </Items>
       </Col>
       <Col>
