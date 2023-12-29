@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { RxDoubleArrowRight, RxDoubleArrowLeft } from "react-icons/rx"
+import { isMobileCheck, isPcCheck, isTabletCheck } from "../theme";
 
 const rowVariants = {
   hidden: (left : boolean) => ({
@@ -85,15 +86,9 @@ function Slider( {type, get} : IGet){
   });
   /* ================= */
   // pc & 태블릿
-  const isPc = useMediaQuery({
-    query: `(min-width : 1024px)`
-  })
-  const isTablet = useMediaQuery({
-    query: `(min-width : 768px) and (max-width : 1023px)`
-  })
-  const isMobile = useMediaQuery({
-    query: `(max-width : 767px)`
-  })
+  const isPc = useMediaQuery(isPcCheck);
+  const isTablet = useMediaQuery(isTabletCheck);
+  const isMobile = useMediaQuery(isMobileCheck);
   const offset = (!isTablet) ? 6 : 4; // 한번에 보여주고 싶은 영화 수
 
   const [index, setIndex] = useState(0);

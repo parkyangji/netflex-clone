@@ -14,6 +14,5 @@ declare module "styled-components" {
     };
     mobile: string;
     tablet: string;
-    pc: string;
   }
 }

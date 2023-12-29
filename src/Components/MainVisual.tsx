@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { makeImagePath } from "../utils";
 import { useMatch, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
+import { isMobileCheck, isPcCheck, isTabletCheck } from "../theme";
 
 function MainVisual(){
 
@@ -21,16 +22,10 @@ function MainVisual(){
   };
 
 
-  const isPc = useMediaQuery({
-    query: `(min-width : 1024px)`
-  })
-  const isTablet = useMediaQuery({
-    query: `(min-width : 768px) and (max-width : 1023px)`
-  })
-  const isMobile = useMediaQuery({
-    query: `(max-width : 767px)`
-  })
-  console.log(isTablet,isMobile)
+  const isPc = useMediaQuery(isPcCheck);
+  const isTablet = useMediaQuery(isTabletCheck);
+  const isMobile = useMediaQuery(isMobileCheck);
+
   if (isLoading) return null;
   if (isError) return null;
   

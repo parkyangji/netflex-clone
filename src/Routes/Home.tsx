@@ -5,6 +5,7 @@ import Detail from "../Components/Detail";
 import MainVisual from "../Components/MainVisual";
 import { useMediaQuery } from "react-responsive";
 import MobileDetail from "../Components/MobileDetail";
+import { isMobileCheck, isPcCheck, isTabletCheck } from "../theme";
 
 
 function Home() {
@@ -14,15 +15,9 @@ function Home() {
     history(-1);
   };
 
-  const isPc = useMediaQuery({
-    query: `(min-width : 1024px)`
-  })
-  const isTablet = useMediaQuery({
-    query: `(min-width : 768px) and (max-width : 1023px)`
-  })
-  const isMobile = useMediaQuery({
-    query: `(max-width : 767px)`
-  })
+  const isPc = useMediaQuery(isPcCheck);
+  const isTablet = useMediaQuery(isTabletCheck);
+  const isMobile = useMediaQuery(isMobileCheck);
   return (
     <>
     <Wrapper>
