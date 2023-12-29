@@ -15,6 +15,7 @@ function App(){
     return (
       <>
         <Helmet>
+          <title>넷플릭스 클론</title>
           <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet" />
         </Helmet>
         <MobileHeader/>
@@ -25,6 +26,7 @@ function App(){
     return (
       <>
         <Helmet>
+          <title>넷플릭스 클론</title>
           <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet" />
         </Helmet>
         <Header/>
