@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { IGetDetailsResult, castMovie, detailMovie, ICast } from "../api";
 import { makeImagePath } from "../utils";
-import { FaStar, FaRegStar } from "react-icons/fa"
 import StarRating from "./StarRating";
+import { IoIosClose } from "react-icons/io";
 
 interface IId {
   id : string | undefined;
@@ -23,6 +23,11 @@ function Detail( {id} : IId ) {
     },
   });
   //console.log(detail.data, cast.data)
+
+  const history = useNavigate();
+  const onBackClick = () => {
+    history(-1);
+  };
 
   if (detail.isLoading && cast.isLoading) {
     //console.log(detail.isLoading && cast.isLoading)
@@ -73,6 +78,7 @@ function Detail( {id} : IId ) {
         </ActorWrap>
       </>
     )}
+    <BackButton onClick={onBackClick}><IoIosClose/></BackButton>
   </BigMovie>
   );
 }
@@ -93,6 +99,7 @@ export const BigMovie = styled.div`
   border-radius: 15px;
   overflow-y: scroll;
   &::-webkit-scrollbar {
+    display: none;
     background: transparent;
   }
   background: linear-gradient(180deg, rgb(100 10 10) 40%, rgb(37 0 0) 100%);
@@ -114,11 +121,17 @@ const EmptyPoster = styled.div`
 `
 
 const BigPoster = styled.img`
-  height: 50%;
-  min-height: 300px;
+  width: 20vw;
+  min-width: 250px;
   float: left;
   margin-right: 3vw;
   margin-bottom: 3vw;
+
+    @media ${(props) => props.theme.tablet} {
+      min-width: initial;
+      max-width: 250px;
+      width: 28vw;
+    }
 `
 
 const TitleBox = styled.div`
@@ -184,7 +197,7 @@ const ActorBox = styled.div`
   gap: 0.2vw;
 
     @media ${(props) => props.theme.tablet} {
-      min-width: 160px;
+      max-width: 160px;
     }
 `
 
@@ -200,15 +213,27 @@ const ActorImg = styled.img`
 `
 
 const EmptyActor = styled.div`
-  height: 100%;
   width: 13vw;
+  height: 20vw;
   max-width: 200px;
+  max-height: 300px;
   background: rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
 
     @media ${(props) => props.theme.tablet} {
-      width: 100%;
+      width: 20vw;
+      height: 30vw;
+      max-width: 160px;
+      max-height: 240px;
     }
+`
+
+const BackButton = styled.button`
+  position: absolute;
+  top: 0;
+  right: 1vw;
+  font-size: 3em;
+  cursor: pointer;
 `

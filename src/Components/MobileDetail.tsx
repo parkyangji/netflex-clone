@@ -86,6 +86,7 @@ function MobileDetail( {id} : IId ){
             <RatingBox>
               <StarRating value={Math.round(detail.data.vote_average * 10)} starSize="1.3em"/>
             </RatingBox>
+            <BigOverview>{detail.data.overview}</BigOverview>
           </>
         )} 
         <BackButton onClick={onBackClick}><IoIosClose style={{filter: "drop-shadow(0px 0px 3px rgb(0 0 0 / 0.3))"}}/></BackButton>
@@ -98,21 +99,24 @@ export default MobileDetail;
 
 
 const BigMove = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
   position: fixed;
   /* top: 10%; */
   z-index: 100;
   width: 100%;
   height: 100%;
   background: black;
-  overflow-x: hidden;
+  overflow: hidden;
   border-top-right-radius: 30px;
   border-top-left-radius: 30px;
   text-align: center;
   box-shadow: 0px -8px 20px 0px rgb(0 0 0 / 50%);
+  padding-bottom: 70px;
 `
 
 const BigPoster = styled.div<{ $bgphoto: string }>`
-  height: 50%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -169,4 +173,18 @@ const RatingBox = styled.div`
   gap: 5px;
   margin-top: 1em;
   justify-content: center;
+`
+
+const BigOverview = styled.p`
+  height: 100%;
+  margin: 1em;
+  line-height: 1.5;
+  font-size: 0.9em;
+  color: ${(props) => props.theme.white.lighter};
+
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+    background: transparent;
+  }
 `
