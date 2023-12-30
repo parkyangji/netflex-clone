@@ -5,7 +5,7 @@ import { makeImagePath } from "../utils";
 import styled from "styled-components";
 import { IoIosClose } from "react-icons/io"
 import { AnimatePresence, motion } from "framer-motion";
-import StarRating from "./StarRating";
+import StarRating from "../Components/StarRating";
 import { useState } from "react";
 
 interface IId {
@@ -17,21 +17,23 @@ const ShowVariants = {
     bottom : -window.innerHeight
   },
   visible: {
-    bottom: -80
+    bottom: 0 //-80
   },
   exit: {
     bottom: -window.innerHeight 
   },
 };
 
-function MobileDetail( {id} : IId ){
+function MobileDetail(){
+  const {state} = useLocation();
+  
   const detail = useQuery<IGetDetailsResult>({
-    queryFn: () => detailMovie(Number(id)),
-    queryKey: ['detail', id],
+    queryFn: () => detailMovie(Number(state)),
+    queryKey: ['detail', state],
   });
   const cast = useQuery({
-    queryFn: () => castMovie(Number(id)),
-    queryKey: ['cast', id],
+    queryFn: () => castMovie(Number(state)),
+    queryKey: ['cast', state],
     select(data) : ICast[] {
       return data.cast.slice(0, 6)
     },
@@ -39,13 +41,9 @@ function MobileDetail( {id} : IId ){
   //console.log(detail.data, cast.data)
 
   const history = useNavigate();
-  const [leaving, setLeaving] = useState(true);
   const onBackClick = () => {
-    setLeaving(false)
-  }
-  const onExit = () => {
     history(-1);
-  };
+  }
 
   if (detail.isLoading && cast.isLoading) {
     //console.log(detail.isLoading && cast.isLoading)
@@ -57,8 +55,8 @@ function MobileDetail( {id} : IId ){
     return null
   }
   return (
-    <AnimatePresence onExitComplete={onExit}>
-      {leaving && <BigMove
+    <AnimatePresence>
+      <BigMove
         variants={ShowVariants}
         initial="hidden"
         animate="visible"
@@ -90,7 +88,7 @@ function MobileDetail( {id} : IId ){
           </>
         )} 
         <BackButton onClick={onBackClick}><IoIosClose style={{filter: "drop-shadow(0px 0px 3px rgb(0 0 0 / 0.3))"}}/></BackButton>
-      </BigMove>}
+      </BigMove>
     </AnimatePresence>
   )
 }
@@ -99,27 +97,30 @@ export default MobileDetail;
 
 
 const BigMove = styled(motion.div)`
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
   position: fixed;
   /* top: 10%; */
   z-index: 100;
   width: 100%;
   height: 100%;
   background: black;
-  overflow: hidden;
-  border-top-right-radius: 30px;
-  border-top-left-radius: 30px;
+  /* border-top-right-radius: 30px;
+  border-top-left-radius: 30px; */
   text-align: center;
   box-shadow: 0px -8px 20px 0px rgb(0 0 0 / 50%);
-  padding-bottom: 70px;
+  /* padding-bottom: 70px; */
+  /* overflow: hidden; */
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+    background: transparent;
+  }
 `
 
 const BigPoster = styled.div<{ $bgphoto: string }>`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  height: 40vw;
+  /* flex: 1; */
   padding: 4rem;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
     url(${(props) => props.$bgphoto});
@@ -161,13 +162,6 @@ const Genre = styled.span`
   line-height: 12px;
 `
 
-const BackButton = styled.button`
-  position: absolute;
-  top: 0;
-  right: 10px;
-  font-size: 3em;
-`
-
 const RatingBox = styled.div`
   display : flex;
   gap: 5px;
@@ -176,15 +170,21 @@ const RatingBox = styled.div`
 `
 
 const BigOverview = styled.p`
-  height: 100%;
   margin: 1em;
   line-height: 1.5;
   font-size: 0.9em;
   color: ${(props) => props.theme.white.lighter};
 
-  overflow-y: auto;
+  /* overflow-y: auto;
   &::-webkit-scrollbar {
     display: none;
     background: transparent;
-  }
+  } */
+`
+
+const BackButton = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 3em;
 `

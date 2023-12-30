@@ -127,6 +127,9 @@ function Slider( {type, get} : IGet){
   /* ================= */
   // 모바일 
   const carousel = useRef<HTMLDivElement>(null);
+  const onMobileClicked = (movieid: number) => {
+    history(`m/movies/${movieid}`, {state: movieid});
+  };
 
   if (isLoading) return null;
   if (isError) return null;
@@ -176,22 +179,24 @@ function Slider( {type, get} : IGet){
 
       {/* 모바일 슬라이드 */}
       {isMobile && 
-        <Row
-          $offset={offset}
-          drag="x" 
-          dragConstraints={carousel}
-          whileDrag={{pointerEvents : "none"}}
-        >
-        {data && data.results
-          .map((movie) => (
-            <Box
-              onClick={() => onBoxClicked(movie.id)}
-              key={movie.id}
-              $bgphoto={makeImagePath(movie.backdrop_path, "w500")}
-            >
-            </Box>
-          ))}
-      </Row>
+        <AnimatePresence>
+          <Row
+            $offset={offset}
+            drag="x" 
+            dragConstraints={carousel}
+            whileDrag={{pointerEvents : "none"}}
+          >
+          {data && data.results
+            .map((movie) => (
+              <Box
+                onClick={() => onMobileClicked(movie.id)}
+                key={movie.id}
+                $bgphoto={makeImagePath(movie.backdrop_path, "w500")}
+              >
+              </Box>
+            ))}
+          </Row>
+        </AnimatePresence>
       }
 
     </SliderWrap>
