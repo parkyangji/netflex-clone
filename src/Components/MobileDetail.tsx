@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { ICast, IGetDetailsResult, castMovie, detailMovie } from "../api";
 import { useLocation, useNavigate } from "react-router-dom";
-import { makeImagePath } from "../utils";
+import { allowScroll, makeImagePath, preventScroll } from "../utils";
 import styled from "styled-components";
 import { IoIosClose } from "react-icons/io"
 import { AnimatePresence, motion } from "framer-motion";
-import StarRating from "../Components/StarRating";
-import { useState } from "react";
+import StarRating from "./StarRating";
+import { useEffect, useState } from "react";
 
 interface IId {
   id : string | undefined;
@@ -24,16 +24,16 @@ const ShowVariants = {
   },
 };
 
-function MobileDetail(){
-  const {state} = useLocation();
-  
+function MobileDetail({id} : IId){
+  //const {state} = useLocation();
+
   const detail = useQuery<IGetDetailsResult>({
-    queryFn: () => detailMovie(Number(state)),
-    queryKey: ['detail', state],
+    queryFn: () => detailMovie(Number(id)),
+    queryKey: ['detail', id],
   });
   const cast = useQuery({
-    queryFn: () => castMovie(Number(state)),
-    queryKey: ['cast', state],
+    queryFn: () => castMovie(Number(id)),
+    queryKey: ['cast', id],
     select(data) : ICast[] {
       return data.cast.slice(0, 6)
     },
@@ -45,6 +45,13 @@ function MobileDetail(){
     //history(-1);
     history('/');
   }
+
+  useEffect(() => {
+    const prevScrollY = preventScroll();
+    return () => {
+      allowScroll(prevScrollY);
+    };
+  }, []);
 
   if (detail.isLoading && cast.isLoading) {
     //console.log(detail.isLoading && cast.isLoading)

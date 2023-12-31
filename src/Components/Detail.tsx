@@ -2,9 +2,10 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { IGetDetailsResult, castMovie, detailMovie, ICast } from "../api";
-import { makeImagePath } from "../utils";
+import { allowScroll, makeImagePath, preventScroll } from "../utils";
 import StarRating from "./StarRating";
 import { IoIosClose } from "react-icons/io";
+import { useEffect } from "react";
 
 interface IId {
   id : string | undefined;
@@ -29,6 +30,13 @@ function Detail( {id} : IId ) {
     //history(-1);
     history('/');
   };
+
+  useEffect(() => {
+    const prevScrollY = preventScroll();
+    return () => {
+      allowScroll(prevScrollY);
+    };
+  }, []);
 
   if (detail.isLoading && cast.isLoading) {
     //console.log(detail.isLoading && cast.isLoading)
@@ -98,7 +106,7 @@ export const BigMovie = styled.div`
   bottom: 0;
   margin: auto;
   border-radius: 15px;
-  overflow-y: scroll;
+  overflow-y: auto;
   &::-webkit-scrollbar {
     display: none;
     background: transparent;

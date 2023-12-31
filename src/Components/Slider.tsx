@@ -129,7 +129,8 @@ function Slider( {type, get} : IGet){
   // 모바일 
   const carousel = useRef<HTMLDivElement>(null);
   const onMobileClicked = (movieid: number) => {
-    history(`m/movies/${movieid}`, {state: movieid});
+    //history(`m/movies/${movieid}`, {state: movieid});
+    history(`/movies/${movieid}`);
   };
 
   if (isLoading) return null;
