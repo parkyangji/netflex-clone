@@ -114,11 +114,11 @@ const router = createBrowserRouter([
         path: "/movies/:movieid",
         element: <Home/>
       },
-      {
-        path: "m/movies/:movieid",
-        element: <MobileDetail/>
-      },
-    ]
+    ],
+  },
+  {
+    path : "m/movies/:movieid",
+    element : <MobileDetail/>
   }
 ],
 { basename: process.env.PUBLIC_URL}

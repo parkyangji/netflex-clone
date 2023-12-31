@@ -26,7 +26,8 @@ function Detail( {id} : IId ) {
 
   const history = useNavigate();
   const onBackClick = () => {
-    history(-1);
+    //history(-1);
+    history('/');
   };
 
   if (detail.isLoading && cast.isLoading) {

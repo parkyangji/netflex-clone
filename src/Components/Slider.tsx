@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { RxDoubleArrowRight, RxDoubleArrowLeft } from "react-icons/rx"
 import { isMobileCheck, isPcCheck, isTabletCheck } from "../theme";
+import { info } from "console";
 
 const rowVariants = {
   hidden: (left : boolean) => ({
@@ -184,6 +185,7 @@ function Slider( {type, get} : IGet){
             $offset={offset}
             drag="x" 
             dragConstraints={carousel}
+            dragElastic={false}
             whileDrag={{pointerEvents : "none"}}
           >
           {data && data.results

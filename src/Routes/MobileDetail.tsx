@@ -42,7 +42,8 @@ function MobileDetail(){
 
   const history = useNavigate();
   const onBackClick = () => {
-    history(-1);
+    //history(-1);
+    history('/');
   }
 
   if (detail.isLoading && cast.isLoading) {
@@ -119,7 +120,7 @@ const BigMove = styled(motion.div)`
 `
 
 const BigPoster = styled.div<{ $bgphoto: string }>`
-  height: 40vw;
+  height: 50%;
   /* flex: 1; */
   padding: 4rem;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),

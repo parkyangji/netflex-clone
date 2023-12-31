@@ -55,7 +55,8 @@ const Banner = styled.div<{ $bgphoto: string }>`
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
     url(${(props) => props.$bgphoto});
   background-size: cover;
-  //background-position: center;
+  background-position: center;
+  background-repeat: no-repeat;
 
     @media ${(props) => props.theme.tablet} {
       padding-top: 14em;
@@ -63,6 +64,7 @@ const Banner = styled.div<{ $bgphoto: string }>`
     @media ${(props) => props.theme.mobile} {
       height: 45vh;
       padding: initial;
+      margin-bottom: -10vh;
     }
 `;
 
