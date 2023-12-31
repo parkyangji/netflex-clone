@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+# OTT Site (Netflex-clone)
+리액트 + 타입스크립트를 공부하면서 제작한 사이트입니다. JSX 문법과 styled-components 라이브러리를 사용하여 자바스크립트 환경에서 편리한 마크업을 구현하였습니다.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+git-pages : https://parkyangji.github.io/netflex-clone/
 
-## Available Scripts
+## React (v18) + typescript
+1. react-router-dom (v6)
 
-In the project directory, you can run:
+    라우터를 이용한 경로 관리
 
-### `npm start`
+2. react-helmet
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    SEO 최적화
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3. react-query
 
-### `npm test`
+    API
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. react-responsive
 
-### `npm run build`
+    반응형 체크
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+5. styled-components
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    컴포넌트식 css 관리
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+6. framer-motion
 
-### `npm run eject`
+    모션
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+7. react-icons
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    아이콘
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<br></br>
+###### *2023.12.29 1차 배포*
+###### *2023.12.31 2차 배포 (모비일 팝업 구조, 팝업화면 부모 스크롤바 겹침, 모바일 슬라이드 드래그 개선 및 이슈 해결)*
