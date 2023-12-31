@@ -9,7 +9,6 @@ import Home from "./Routes/Home";
 import Tv from "./Routes/Tv";
 import Search from "./Routes/Search";
 import { HelmetProvider } from "react-helmet-async";
-import MobileDetail from "./Components/MobileDetail";
 
 
 const GlobalStyle = createGlobalStyle`
