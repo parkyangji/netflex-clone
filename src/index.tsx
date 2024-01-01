@@ -65,7 +65,7 @@ table {
 body {
   font-weight: 300;
   font-family: 'Noto Sans KR', sans-serif;
-  color: ${props => props.theme.white.darker};
+  color: "#e5e5e5";
   line-height: 1.2;
   background-color: black;
   //overflow-x: hidden;

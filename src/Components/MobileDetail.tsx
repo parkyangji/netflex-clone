@@ -181,7 +181,7 @@ const BigOverview = styled.p`
   margin: 1em;
   line-height: 1.5;
   font-size: 0.9em;
-  color: ${(props) => props.theme.white.lighter};
+  color: "#fff";
 
   /* overflow-y: auto;
   &::-webkit-scrollbar {
