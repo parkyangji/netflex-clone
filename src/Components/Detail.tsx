@@ -112,7 +112,7 @@ export const BigMovie = styled.div`
     background: transparent;
   }
   background: linear-gradient(180deg, rgb(100 10 10) 40%, rgb(37 0 0) 100%);
-  color: "#fff";
+  color: #fff;
   z-index: 100;
 `;
 
@@ -181,7 +181,7 @@ const RatingBox = styled.div`
 `
 const BigOverview = styled.p`
   margin: 1em;
-  color: "#fff";
+  color: #fff;
 `
 
 const Actor = styled.span`

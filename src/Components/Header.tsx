@@ -158,7 +158,7 @@ export const Logo = styled(motion.svg)`
   margin-right: 50px;
   width: 95px;
   height: 25px;
-  fill: ${(props) => props.theme.red};
+  fill: #E51013;
   path {
     stroke-width: 6px;
     stroke: white;
@@ -176,14 +176,14 @@ const Items = styled.ul`
 
 const Item = styled.li`
   margin-right: 20px;
-  color: "#e5e5e5";
+  color: #e5e5e5;
   transition: color 0.3s ease-in-out;
   position: relative;
   display: flex;
   justify-content: center;
   flex-direction: column;
   &:hover {
-    color: "#fff";
+    color: #fff;
   }
 `;
 
@@ -219,7 +219,7 @@ const Input = styled(motion.input)`
   color: white;
   font-size: 16px;
   background-color: transparent;
-  border: 1px solid "#fff";
+  border: 1px solid #fff;
   font-size:12px;
 
 `;

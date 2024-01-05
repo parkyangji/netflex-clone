@@ -92,10 +92,10 @@ const MoreBtn = styled.button`
   cursor: pointer;
   width: 150px;
   background: transparent;
-  border: 1px solid "#fff";
+  border: 1px solid#fff;
   border-radius: 10px;
   margin-top: 2em;
   padding: 10px;
   font-size: 1em;
-  color: "#fff";
+  color: #fff;
 `
