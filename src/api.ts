@@ -91,3 +91,8 @@ export function castMovie(id :number){
   return fetch(`${BASE_PATH}/movie/${id}/credits?language=ko-KR`, options)
   .then(response => response.json())
 }
+
+export function searchMovie(value :any){
+  return fetch(`${BASE_PATH}/search/movie?query=${value}&include_adult=false&language=ko-KR`, options)
+  .then(response => response.json())
+}

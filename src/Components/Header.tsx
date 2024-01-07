@@ -206,7 +206,7 @@ const Circle = styled(motion.span)`
   left: 0;
   right: 0;
   margin: 0 auto;
-  background-color: ${(props) => props.theme.red};
+  background-color: #E51013;
 `;
 
 const Input = styled(motion.input)`
