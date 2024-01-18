@@ -9,7 +9,7 @@ import Home from "./Routes/Home";
 import Tv from "./Routes/Tv";
 import Search from "./Routes/Search";
 import { HelmetProvider } from "react-helmet-async";
-import MobileSearch from "./Routes/MobileSearch";
+import MobileSearch from "./Components/MobileSearch";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -119,12 +119,12 @@ const router = createBrowserRouter([
         element: <Search/>
       },
       {
-        path: "/m/search",
-        element: <MobileSearch/>
-      },
-      {
         path: "/movies/:movieid",
         element: <Home/>
+      },
+      {
+        path: "/search/:movieid",
+        element: <Search/>
       },
     ],
   },

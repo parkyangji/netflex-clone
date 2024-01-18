@@ -16,6 +16,7 @@ function App(){
       <>
         <Helmet>
           <title>넷플릭스 클론</title>
+          <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
           <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet" />
         </Helmet>
         <MobileHeader/>

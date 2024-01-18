@@ -25,6 +25,12 @@ function Detail( {id} : IId ) {
   });
   //console.log(detail.data, cast.data)
 
+
+  const history = useNavigate();
+  const onBackClick = () => {
+    history(-1);
+  };
+
   useEffect(() => {
     const prevScrollY = preventScroll();
     return () => {
@@ -81,6 +87,7 @@ function Detail( {id} : IId ) {
         </ActorWrap>
       </>
     )}
+  <BackButton onClick={onBackClick}><IoIosClose/></BackButton>
   </BigMovie>
   );
 }
@@ -230,4 +237,12 @@ const EmptyActor = styled.div`
       max-width: 160px;
       max-height: 240px;
     }
+`
+
+const BackButton = styled.button`
+  position: absolute;
+  top: 0;
+  right: 1vw;
+  font-size: 3em;
+  cursor: pointer;
 `

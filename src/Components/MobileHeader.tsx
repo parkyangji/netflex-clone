@@ -5,7 +5,8 @@ import { motion } from "framer-motion";
 function MobileHeader(){
   const history = useNavigate();
   const homeClick = () => history('/');
-  const onSearch = () => history('/m/search');
+  const onSearch = () => history('/search');
+  
   return (
     <Nav>
       <Col>

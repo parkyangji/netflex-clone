@@ -40,7 +40,6 @@ function Home() {
       ) : null}
       {(isMobile) && bigMovieMatch ? (
         <>
-          <Back onClick={onBackClick} />
           <MobileDetail id={bigMovieMatch?.params.movieid} />
         </>
       ) : null}
