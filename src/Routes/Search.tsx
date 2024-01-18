@@ -5,6 +5,10 @@ import styled from "styled-components";
 import { makeImagePath } from "../utils";
 import { useState } from "react";
 import Detail from "../Components/Detail";
+import { useMediaQuery } from "react-responsive";
+import { isMobileCheck, isPcCheck, isTabletCheck } from "../theme";
+import MobileDetail from "../Components/MobileDetail";
+import { IoIosClose } from "react-icons/io";
 
 function Search() {
   const { state } = useLocation(); // 현재 주소
@@ -25,6 +29,10 @@ function Search() {
     e.preventDefault();
     setID(null);
   }
+
+  const isPc = useMediaQuery(isPcCheck);
+  const isTablet = useMediaQuery(isTabletCheck);
+  const isMobile = useMediaQuery(isMobileCheck);
 
   if (isLoading) return null;
   if (isError) return null;
@@ -51,10 +59,17 @@ function Search() {
           ))}
       </SearchWrap>
 
-      { ID ? (
+      {/* 팝업 */}
+      {(isPc || isTablet) && ID ? (
         <>
           <Back onClick={onBackClick} />
           <Detail id={ID} />
+        </>
+      ) : null}
+      {(isMobile) && ID ? (
+        <>
+          <CloseBtn onClick={onBackClick}><IoIosClose style={{filter: "drop-shadow(0px 0px 3px rgb(0 0 0 / 0.3))"}}/></CloseBtn>
+          <MobileDetail id={ID} />
         </>
       ) : null}
     </>
@@ -69,6 +84,11 @@ const SearchInfo = styled.div`
   margin-bottom: 40px;
   font-size: 3em;
   text-align: center;
+
+  @media ${(props) => props.theme.mobile} {
+    font-size: 1.5em;
+    margin: 35px 0;
+  }
 `
 
 const SearchWrap = styled.div`
@@ -79,6 +99,9 @@ const SearchWrap = styled.div`
 
   @media ${(props) => props.theme.tablet} {
     grid-template-columns: repeat(3, minmax(230px, auto));
+  }
+  @media ${(props) => props.theme.tablet} {
+    grid-template-columns: repeat(3, 1fr);
   }
 `;
 
@@ -108,3 +131,11 @@ const Back = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 100;
 `;
+
+const CloseBtn = styled.button`
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 101;
+  font-size: 3em;
+`

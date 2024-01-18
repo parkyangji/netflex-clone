@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { ICast, IGetDetailsResult, castMovie, detailMovie } from "../api";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useMatch, useNavigate } from "react-router-dom";
 import { allowScroll, makeImagePath, preventScroll } from "../utils";
 import styled from "styled-components";
 import { IoIosClose } from "react-icons/io"
@@ -26,6 +26,7 @@ const ShowVariants = {
 
 function MobileDetail({id} : IId){
   //const {state} = useLocation();
+  const searchMatch = useMatch('/m/search')
 
   const detail = useQuery<IGetDetailsResult>({
     queryFn: () => detailMovie(Number(id)),
@@ -42,8 +43,8 @@ function MobileDetail({id} : IId){
 
   const history = useNavigate();
   const onBackClick = () => {
-    //history(-1);
-    history('/');
+    history(-1);
+    //history('/');
   }
 
   useEffect(() => {
@@ -95,7 +96,7 @@ function MobileDetail({id} : IId){
             <BigOverview>{detail.data.overview}</BigOverview>
           </>
         )} 
-        <BackButton onClick={onBackClick}><IoIosClose style={{filter: "drop-shadow(0px 0px 3px rgb(0 0 0 / 0.3))"}}/></BackButton>
+        { (searchMatch === null) && <BackButton onClick={onBackClick}><IoIosClose style={{filter: "drop-shadow(0px 0px 3px rgb(0 0 0 / 0.3))"}}/></BackButton>}
       </BigMove>
     </AnimatePresence>
   )

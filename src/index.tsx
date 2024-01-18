@@ -9,6 +9,7 @@ import Home from "./Routes/Home";
 import Tv from "./Routes/Tv";
 import Search from "./Routes/Search";
 import { HelmetProvider } from "react-helmet-async";
+import MobileSearch from "./Routes/MobileSearch";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -87,6 +88,14 @@ button {
   -webkit-appearance: none;
 }
 
+input {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    border: none;
+    outline: none;
+}
+
 #root {
   overflow: hidden;
 }
@@ -108,6 +117,10 @@ const router = createBrowserRouter([
       {
         path: "/search",
         element: <Search/>
+      },
+      {
+        path: "/m/search",
+        element: <MobileSearch/>
       },
       {
         path: "/movies/:movieid",

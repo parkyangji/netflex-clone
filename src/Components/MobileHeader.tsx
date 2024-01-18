@@ -1,11 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import { Nav, Col, Logo, logoVariants } from "./Header";
 import { motion } from "framer-motion";
 
 function MobileHeader(){
+  const history = useNavigate();
+  const homeClick = () => history('/');
+  const onSearch = () => history('/m/search');
   return (
     <Nav>
       <Col>
         <Logo
+          onClick={homeClick}
           variants={logoVariants}
           whileHover="active"
           initial="normal"
@@ -19,6 +24,7 @@ function MobileHeader(){
       </Col>
       <Col>
         <svg
+          onClick={onSearch}
           style={{position: "absolute", right: "1em"}}
           width="1.8em"
           fill="currentColor"
