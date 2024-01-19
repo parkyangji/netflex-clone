@@ -9,9 +9,9 @@ import SearchResult from "../Components/SearchResult";
 
 function Search() {
   const { state } = useLocation(); // 현재 주소
-
-  const searchMovieMatch = useMatch("/search/:movieid");
   const history = useNavigate();
+  const searchMovieMatch = useMatch("/search/:movieid");
+  
   const onBackClick = () => {
     history(-1);
   };
@@ -27,7 +27,7 @@ function Search() {
         {state ?
           <>
             <SearchInfo>"{state.key}" 에 대한 검색결과</SearchInfo>
-            <SearchResult keyword={state.key}/>
+            <SearchResult />
           </>
           : null
         }

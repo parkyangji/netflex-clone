@@ -2,29 +2,23 @@ import { useQuery } from "@tanstack/react-query";
 import { IGetMoviesResult, searchMovie } from "../api";
 import styled from "styled-components";
 import { makeImagePath } from "../utils";
-import { useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import { isMobileCheck, isPcCheck, isTabletCheck } from "../theme";
-import Detail from "./Detail";
-import MobileDetail from "./MobileDetail";
-import { useMatch, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-interface Ikeyword {
-  keyword : string | undefined;
-}
 
-function SearchResult({keyword} : Ikeyword ){
+function SearchResult(){
+  const { state } = useLocation();
+  const history = useNavigate(); // url을 왔다갔다
 
   const { data, isLoading, isError } = useQuery<IGetMoviesResult>({
-    queryFn: () => searchMovie(keyword),
-    queryKey: ["search", keyword],
+    queryFn: () => searchMovie(state.key),
+    queryKey: ["search", state.key],
     // select(data) : number[] {
     //   return data.results.map((result : IMovie) => result.id)
     // },
   });
-  const history = useNavigate(); // url을 왔다갔다
+
   const onSetClick = (movieid : number) => {
-    history(`/search/${movieid}`, {state: {key : keyword}});
+    history(`/search/${movieid}`, {state: {key : state.key}});
   }
 
   if (isLoading) return null;
