@@ -18,7 +18,7 @@ function SearchResult(){
   });
 
   const onSetClick = (movieid : number) => {
-    history(`/search/${movieid}`, {state: {key : state.key}});
+    history(`/search?keyword=${state.key}&movieid=${movieid}`, {state: {key : state.key, id : movieid}});
   }
 
   if (isLoading) return null;

@@ -120,10 +120,6 @@ const router = createBrowserRouter([
         path: "/movies/:movieid",
         element: <Home/>
       },
-      {
-        path: "/search/:movieid",
-        element: <Search/>
-      },
     ],
   },
 ],

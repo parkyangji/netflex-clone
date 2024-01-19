@@ -1,4 +1,4 @@
-import { useLocation, useMatch, useNavigate } from "react-router-dom";
+import { useLocation, useMatch, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Detail from "../Components/Detail";
 import { useMediaQuery } from "react-responsive";
@@ -10,8 +10,7 @@ import SearchResult from "../Components/SearchResult";
 function Search() {
   const { state } = useLocation(); // 현재 주소
   const history = useNavigate();
-  const searchMovieMatch = useMatch("/search/:movieid");
-  
+
   const onBackClick = () => {
     history(-1);
   };
@@ -32,16 +31,17 @@ function Search() {
           : null
         }
       </Wrap>
+      
         {/* 팝업 */}
-        {(isPc || isTablet) && searchMovieMatch ? (
+        {(isPc || isTablet) && state && state.id ? (
           <>
             <Back onClick={onBackClick} />
-            <Detail id={searchMovieMatch?.params.movieid} />
+            <Detail id={state.id} />
           </>
         ) : null}
-        {(isMobile) && searchMovieMatch ? (
+        {(isMobile) && state && state.id ? (
           <>
-            <MobileDetail id={searchMovieMatch?.params.movieid} />
+            <MobileDetail id={state.id} />
           </>
         ) : null}
     </>
