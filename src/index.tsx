@@ -1,4 +1,3 @@
-import { RecoilRoot } from "recoil";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { theme } from "./theme";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
@@ -9,7 +8,6 @@ import Home from "./Routes/Home";
 import Tv from "./Routes/Tv";
 import Search from "./Routes/Search";
 import { HelmetProvider } from "react-helmet-async";
-import MobileSearch from "./Components/MobileSearch";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -138,15 +136,13 @@ const root = createRoot(container!);
 const client = new QueryClient();
 
 root.render(
-    <RecoilRoot>
-      <HelmetProvider>
-        <QueryClientProvider client={client}>
-          <ThemeProvider theme={theme}>
-            <GlobalStyle/>
-            <RouterProvider router={router} />
-          </ThemeProvider>
-        </QueryClientProvider>
-      </HelmetProvider>
-    </RecoilRoot>
+  <HelmetProvider>
+    <QueryClientProvider client={client}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle/>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </QueryClientProvider>
+  </HelmetProvider>
 );
 
