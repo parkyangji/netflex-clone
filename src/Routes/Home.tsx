@@ -4,7 +4,7 @@ import { useMatch, useNavigate } from "react-router-dom";
 import Detail from "../Components/Detail";
 import MainVisual from "../Components/MainVisual";
 import { useMediaQuery } from "react-responsive";
-import MobileDetail from "../Components/MobileDetail";
+import MobileDetail from "../Components/Mobile/MobileDetail";
 import { isMobileCheck, isPcCheck, isTabletCheck } from "../theme";
 
 

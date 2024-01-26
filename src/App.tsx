@@ -4,7 +4,7 @@ import Footer from "./Components/Footer"
 import { createGlobalStyle } from "styled-components";
 import { Helmet } from "react-helmet-async";
 import { useMediaQuery } from "react-responsive";
-import MobileHeader from "./Components/MobileHeader";
+import MobileHeader from "./Components/Mobile/MobileHeader";
 import { isMobileCheck } from "./theme";
 
 

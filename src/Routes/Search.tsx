@@ -3,8 +3,8 @@ import styled from "styled-components";
 import Detail from "../Components/Detail";
 import { useMediaQuery } from "react-responsive";
 import { isMobileCheck, isPcCheck, isTabletCheck } from "../theme";
-import MobileDetail from "../Components/MobileDetail";
-import MobileSearch from "../Components/MobileSearch";
+import MobileDetail from "../Components/Mobile/MobileDetail";
+import MobileSearch from "../Components/Mobile/MobileSearch";
 import SearchResult from "../Components/SearchResult";
 
 function Search() {

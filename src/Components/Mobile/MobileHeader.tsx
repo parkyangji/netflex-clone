@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Nav, Col, Logo, logoVariants } from "./Header";
+import { Nav, Col, Logo, logoVariants } from "../Header";
 import { motion } from "framer-motion";
 
 function MobileHeader(){

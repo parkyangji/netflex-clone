@@ -5,6 +5,17 @@ import { makeImagePath } from "../utils";
 import { useMatch, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { isMobileCheck, isPcCheck, isTabletCheck } from "../theme";
+import { motion } from "framer-motion";
+
+const moreVariants = {
+  hover: {
+    y: -5,
+    transition: {
+      duaration: 0.1,
+      type: "tween",
+    },
+  },
+};
 
 function MainVisual(){
 
@@ -34,7 +45,12 @@ function MainVisual(){
       <Banner $bgphoto={makeImagePath(data.backdrop_path)}>
         <Title>{data.title}</Title>
         <Overview>{data.overview}</Overview>
-        <MoreBtn onClick={() => onBoxClicked(data.id)}>more</MoreBtn>
+        <MoreBtn 
+          onClick={() => onBoxClicked(data.id)}
+          variants={moreVariants}
+          whileHover="hover"
+          transition={{type : "tween"}}
+        >more</MoreBtn>
       </Banner>
     )}
 
@@ -82,13 +98,22 @@ const Overview = styled.p`
   line-height: 1.5;
   width: 50%;
 
+  display: -webkit-box;
+  word-wrap: break-word;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-height: 200px;
+  text-align: initial;
+
     @media ${(props) => props.theme.tablet} {
       width: 80%;
       font-size: 1.2em;
     }
 `;
 
-const MoreBtn = styled.button`
+const MoreBtn = styled(motion.button)`
   cursor: pointer;
   width: 150px;
   background: transparent;
@@ -98,4 +123,11 @@ const MoreBtn = styled.button`
   padding: 10px;
   font-size: 1em;
   color: #fff;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 100%;
+    background: white;
+  }
 `

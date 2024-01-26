@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Search from "../Routes/Search";
+import Search from "../../Routes/Search";
 
 interface IForm {
   keyword : string;

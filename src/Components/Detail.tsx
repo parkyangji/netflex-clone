@@ -154,6 +154,7 @@ const BigTitle = styled.span`
 `;
 const SmallTitle = styled.span`
   color: #d0d0d0;
+  max-width: 200px;
 `
 
 const ExtraBox = styled.div`
@@ -182,6 +183,16 @@ const RatingBox = styled.div`
 const BigOverview = styled.p`
   margin: 1em;
   color: #fff;
+
+  display: -webkit-box;
+  word-wrap: break-word;
+  -webkit-line-clamp: 8;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-height: 180px;
+  text-align: initial;
+  line-height: 1.3;
 `
 
 const Actor = styled.span`
@@ -202,6 +213,7 @@ const ActorWrap = styled.div`
 const ActorBox = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   text-align: center;
   gap: 0.2vw;
 

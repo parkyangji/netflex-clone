@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { ICast, IGetDetailsResult, castMovie, detailMovie } from "../api";
+import { ICast, IGetDetailsResult, castMovie, detailMovie } from "../../api";
 import { useLocation, useMatch, useNavigate } from "react-router-dom";
-import { allowScroll, makeImagePath, preventScroll } from "../utils";
+import { allowScroll, makeImagePath, preventScroll } from "../../utils";
 import styled from "styled-components";
 import { IoIosClose } from "react-icons/io"
 import { AnimatePresence, motion } from "framer-motion";
-import StarRating from "./StarRating";
+import StarRating from "../StarRating";
 import { useEffect, useState } from "react";
 
 interface IId {
