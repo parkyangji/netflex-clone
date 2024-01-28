@@ -34,7 +34,7 @@ function SearchResult(){
           >
             {result.poster_path ? (
               <img
-                src={makeImagePath(result.poster_path, "w300_and_h450_bestv2")}
+                src={makeImagePath(result.poster_path)}
                 alt=""
               />
             ) : (
