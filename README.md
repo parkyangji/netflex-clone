@@ -4,34 +4,22 @@
 git-pages : https://parkyangji.github.io/netflex-clone/
 
 ## React (v18) + typescript
-1. react-router-dom (v6)
+1. react-router-dom (v6) : 라우터를 이용한 경로 관리
 
-    라우터를 이용한 경로 관리
+2. react-helmet : SEO 최적화
 
-2. react-helmet
+3. react-query : API
 
-    SEO 최적화
+4. react-responsive : 반응형 체크
 
-3. react-query
+5. styled-components : 컴포넌트식 css 관리
 
-    API
+6. framer-motion : 모션
 
-4. react-responsive
+7. react-icons : 아이콘
 
-    반응형 체크
-
-5. styled-components
-
-    컴포넌트식 css 관리
-
-6. framer-motion
-
-    모션
-
-7. react-icons
-
-    아이콘
-
-###### *2023.12.29 1차 배포*
-###### *2023.12.31 2차 배포 (모비일 팝업 구조, 팝업화면 부모 스크롤바 겹침, 모바일 슬라이드 드래그 개선 및 이슈 해결)*
-##### *2023.1.18 3차 배포 (검색페이지 추가)*
+<br>
+<span style="color: gray"> 2023.12.29 1차 배포<br>
+2023.12.31 2차 배포 (모비일 팝업 구조, 팝업화면 부모 스크롤바 겹침, 모바일 슬라이드 드래그 개선 및 이슈 해결)<br>
+2023.1.18 3차 배포 (검색페이지 추가)<br>
+2023.1.28 1차 최종
