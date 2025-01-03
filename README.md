@@ -2,7 +2,7 @@
 리액트 + 타입스크립트를 공부하면서 제작한 사이트입니다. JSX 문법과 styled-components 라이브러리를 사용하여 자바스크립트 환경에서 편리한 마크업을 구현하였습니다.
 
 git-pages : https://parkyangji.github.io/netflex-clone/ <br>
-notion : https://www.notion.so/OTT-Site-React-dcfa1d0d74a54dc4bddf11c4c8d2b961
+notion : [https://www.notion.so/OTT-Site-React-dcfa1d0d74a54dc4bddf11c4c8d2b961](https://gratis-jumper-3d4.notion.site/OTT-Site-React-dcfa1d0d74a54dc4bddf11c4c8d2b961)
 
 ## React (v18) + typescript
 1. react-router-dom (v6) : 라우터를 이용한 경로 관리
